@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "2_backend-pet": "file:",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -13,7 +14,7 @@
   "version": "1.0.0",
   "description": "Backend do projeto final do Geração Tech 2.0",
   "main": "index.js",
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js"
@@ -25,7 +26,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/flaviare1s/conectapet-back/issues"
   },
