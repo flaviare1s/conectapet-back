@@ -3,11 +3,13 @@ CREATE DATABASE conectapet_db;
 USE conectapet_db;
 
 CREATE TABLE users (
-  id CHAR(36) PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  role ENUM('user', 'guardian') NOT NULL
+  senha VARCHAR(255) NOT NULL,
+  role ENUM('user', 'guardian') NOT NULL,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE pets (
@@ -17,7 +19,7 @@ CREATE TABLE pets (
   idade VARCHAR(20),
   tipo ENUM('cachorro', 'gato') NOT NULL,
   responsavel VARCHAR(100),
-  guardianId CHAR(36),
+  guardianId INT,
   sexo ENUM('macho', 'fêmea'),
   porte ENUM('pequeno', 'médio', 'grande'),
   status ENUM('Coração livre!', 'Quase lá!', 'Final feliz!'),
@@ -25,11 +27,13 @@ CREATE TABLE pets (
   castrado ENUM('sim', 'não'),
   vacinado ENUM('sim', 'não'),
   observacoes TEXT,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (guardianId) REFERENCES users(id)
 );
 
 CREATE TABLE adoptions (
-  id CHAR(36) PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   dataN DATE,
   cpf CHAR(11),
@@ -45,13 +49,15 @@ CREATE TABLE adoptions (
   compromisso ENUM('sim', 'não'),
   visitas ENUM('sim', 'não'),
   motivacao TEXT,
-  userId CHAR(36),
+  userId INT,
   petId INT,
   petName VARCHAR(50),
-  guardianId CHAR(36),
+  guardianId INT,
   guardianName VARCHAR(100),
   guardianEmail VARCHAR(100),
   email VARCHAR(100),
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (petId) REFERENCES pets(id),
   FOREIGN KEY (guardianId) REFERENCES users(id)
