@@ -17,7 +17,7 @@ export const User = connection.define('user', {
     unique: true,
   },
   senha: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING(30),
     allowNull: false,
   },
   role: {
