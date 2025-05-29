@@ -26,9 +26,11 @@ export const UserRepository = {
   },
 
   findByEmail: async (email) => {
-    return await User.findOne({ where: { email },
+    return await User.findOne({
+      where: { email },
       attributes: {
         exclude: ["senha"],
-      }, });
+      },
+    });
   },
 };

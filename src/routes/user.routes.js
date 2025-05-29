@@ -5,5 +5,6 @@ export const userRouter = Router();
 
 userRouter.post("/", UserController.create);
 userRouter.get("/", UserController.getAll);
+userRouter.get("/:id", UserController.getById);
 
 export default userRouter;
