@@ -45,6 +45,7 @@ CREATE TABLE adoptions (
   bairro VARCHAR(100),
   numero VARCHAR(10),
   cidade VARCHAR(100),
+  termo BOOLEAN NOT NULL DEFAULT FALSE,
   custos ENUM('sim', 'não'),
   compromisso ENUM('sim', 'não'),
   visitas ENUM('sim', 'não'),

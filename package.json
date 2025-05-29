@@ -9,7 +9,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
     "nodemon": "^3.1.10",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3"
   },
   "name": "2_backend-pet",
   "version": "1.0.0",
