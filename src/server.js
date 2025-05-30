@@ -1,12 +1,16 @@
 import { app } from "./app.js";
-import { connection, authenticate } from "./config/database.js";
+import { connection } from "./config/database.js";
+import './models/user.model.js';
+import './models/pet.model.js';
+import './models/adoption.model.js';
 
 const PORT = 3000;
 
 const startServer = async () => {
   try {
-    await authenticate(connection);
-    await connection.sync();
+    await connection.authenticate();
+    await connection.sync({ force: false });
+    console.log("Tabelas criadas ou verificadas com sucesso!");
     app.listen(PORT, () => {
       console.log(`Servidor rodando em http://localhost:${PORT}`);
     });

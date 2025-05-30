@@ -29,4 +29,8 @@ export const UserService = {
   getAllUsers: async () => {
     return await UserRepository.findAll();
   },
+
+  getUserById: async (id) => {
+    return await UserRepository.findById(id);
+  },
 };
