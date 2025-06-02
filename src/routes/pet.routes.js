@@ -4,7 +4,7 @@ import { upload } from "../middlewares/pet.middleware.js";
 
 export const petRouter = Router();
 
-petRouter.post("/", upload.single("image"), PetController.create);
+petRouter.post("/", upload.single("imagem"), PetController.create);
 petRouter.get("/", PetController.getAll);
 
 export default petRouter;

@@ -3,7 +3,12 @@ import { PetService } from "../services/pet.service.js";
 export const PetController = {
   async create(req, res) {
     try {
-      const pet = await PetService.createPet(req.body);
+      const petData = {
+        ...req.body,
+        imagem: req.file.filename,
+      };
+  
+      const pet = await PetService.createPet(petData);
       res.status(201).json(pet);
     } catch (error) {
       res.status(400).json({ error: error.message });

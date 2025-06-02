@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { connection } from "../config/database.js";
-import { User } from "./user.model.js";
 
 export const Pet = connection.define(
   "pet",
