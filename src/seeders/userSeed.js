@@ -25,7 +25,7 @@ export async function seedUsers() {
     },
     {
       nome: "UPAC",
-      email: "apata@teste.com",
+      email: "upac@teste.com",
       senha: senhaHash,
       role: "guardian",
     },
