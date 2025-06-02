@@ -6,10 +6,10 @@ import { authorizeRoles } from "../middlewares/auth.middleware.js";
 
 export const petRouter = Router();
 
-petRouter.post("/", upload.single("imagem"), PetController.create);
+petRouter.post("/", authenticate, authorizeRoles("guardian"), upload.single("imagem"), PetController.create);
 petRouter.get("/", PetController.getAll);
 petRouter.get("/:id", PetController.getById);
-petRouter.put("/:id", upload.single("imagem"), PetController.update);
-petRouter.delete("/:id", PetController.delete);
+petRouter.put("/:id", authenticate, authorizeRoles("guardian"), upload.single("imagem"), PetController.update);
+petRouter.delete("/:id", authenticate, authorizeRoles("guardian"), PetController.delete);
 
 export default petRouter;
