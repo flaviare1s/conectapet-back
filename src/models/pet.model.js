@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { connection } from "../config/database.js";
+import { User } from "./user.model.js";
 
 export const Pet = connection.define(
   "pet",
@@ -9,9 +10,9 @@ export const Pet = connection.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    imagem: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+    tipo: {
+      type: DataTypes.ENUM("cachorro", "gato"),
+      allowNull: false,
     },
     nome: {
       type: DataTypes.STRING(50),
@@ -19,51 +20,47 @@ export const Pet = connection.define(
     },
     idade: {
       type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    tipo: {
-      type: DataTypes.ENUM("cachorro", "gato"),
       allowNull: false,
     },
-    responsavel: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    guardianId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "users",
-        key: "id",
-      },
-    },
-    sexo: {
-      type: DataTypes.ENUM("macho", "fêmea"),
-      allowNull: true,
-    },
-    porte: {
-      type: DataTypes.ENUM("pequeno", "médio", "grande"),
-      allowNull: true,
-    },
-    status: {
-      type: DataTypes.ENUM("Coração livre!", "Quase lá!", "Final feliz!"),
-      allowNull: true,
+    imagem: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     descricao: {
       type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    castrado: {
-      type: DataTypes.ENUM("sim", "não"),
-      allowNull: true,
-    },
-    vacinado: {
-      type: DataTypes.ENUM("sim", "não"),
-      allowNull: true,
+      allowNull: false,
     },
     observacoes: {
       type: DataTypes.TEXT,
       allowNull: true,
+    },
+    status: {
+      type: DataTypes.ENUM("Coração livre!", "Quase lá!", "Final feliz!"),
+      allowNull: false,
+    },
+    porte: {
+      type: DataTypes.ENUM("pequeno", "médio", "grande"),
+      allowNull: false,
+    },
+    sexo: {
+      type: DataTypes.ENUM("macho", "fêmea"),
+      allowNull: false,
+    },
+    vacinado: {
+      type: DataTypes.ENUM("sim", "não"),
+      allowNull: false,
+    },
+    castrado: {
+      type: DataTypes.ENUM("sim", "não"),
+      allowNull: false,
+    },
+    guardianId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "users",
+        key: "id",
+      },
     },
   },
   {

@@ -1,8 +1,6 @@
 import { app } from "./app.js";
 import { connection } from "./config/database.js";
-import './models/user.model.js';
-import './models/pet.model.js';
-import './models/adoption.model.js';
+import './models/index.js';
 
 const PORT = 3000;
 
