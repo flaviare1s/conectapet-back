@@ -8,4 +8,16 @@ export const PetService = {
   getAllPets: async () => {
     return await PetRepository.findAll();
   },
+
+  getPetById: async (id) => {
+    return await PetRepository.findById(id);
+  },
+
+  updatePet: async (id, data) => {
+    return await PetRepository.update(id, data);
+  },
+
+  deletePet: async (id) => {
+    return await PetRepository.delete(id);
+  },
 };
