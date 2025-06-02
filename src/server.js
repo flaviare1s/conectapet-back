@@ -1,8 +1,16 @@
 import { app } from "./app.js";
 import { connection } from "./config/database.js";
 import './models/index.js';
+import fs from "fs";
+import path from "path";
 
 const PORT = 3000;
+
+const uploadDir = path.resolve("./uploads");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 const startServer = async () => {
   try {
