@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
 export async function seedUsers() {
-  const senhaHash = await bcrypt.hash("senha123", 10);
+  const senhaHash = await bcrypt.hash("123456", 10);
 
   const users = [
     {
@@ -12,8 +12,20 @@ export async function seedUsers() {
       role: "user",
     },
     {
-      nome: "Maria Oliveira",
-      email: "maria.oliveira@example.com",
+      nome: "APATA",
+      email: "apata@teste.com",
+      senha: senhaHash,
+      role: "guardian",
+    },
+    {
+      nome: "Maria de Sousa",
+      email: "maria@teste.com",
+      senha: senhaHash,
+      role: "user",
+    },
+    {
+      nome: "UPAC",
+      email: "apata@teste.com",
       senha: senhaHash,
       role: "guardian",
     },
