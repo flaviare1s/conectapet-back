@@ -7,7 +7,7 @@ export const PetController = {
         ...req.body,
         imagem: req.file.filename,
       };
-  
+
       const pet = await PetService.createPet(petData);
       res.status(201).json(pet);
     } catch (error) {
@@ -18,7 +18,15 @@ export const PetController = {
   async getAll(_req, res) {
     try {
       const pets = await PetService.getAllPets();
-      res.json(pets);
+
+      const baseUrl = `${_req.protocol}://${_req.get("host")}`;
+
+      const petsComUrlImagem = pets.map((pet) => ({
+        ...pet.toJSON(),
+        imagemUrl: pet.imagem ? `${baseUrl}/uploads/${pet.imagem}` : null,
+      }));
+
+      res.json(petsComUrlImagem);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
