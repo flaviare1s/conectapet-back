@@ -22,7 +22,7 @@ export const Adoption = connection.define(
       allowNull: false,
     },
     ec: {
-      type: DataTypes.ENUM("solteiro", "casado", "divorciado", "viúvo"),
+      type: DataTypes.ENUM("solteiro", "casado", "divorciado", "viuvo"),
       allowNull: false,
     },
     profissao: {
@@ -31,27 +31,27 @@ export const Adoption = connection.define(
     },
     cel: {
       type: DataTypes.STRING(20),
-      allowNull: true,
+      allowNull: false,
     },
     cep: {
       type: DataTypes.STRING(20),
-      allowNull: true,
+      allowNull: false,
     },
     rua: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     bairro: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     numero: {
       type: DataTypes.STRING(20),
-      allowNull: true,
+      allowNull: false,
     },
     cidade: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     termo: {
       type: DataTypes.BOOLEAN,
@@ -73,33 +73,26 @@ export const Adoption = connection.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    favoritado: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },    
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "users",
+        key: "id",
+      },
     },
     petId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    petName: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    guardianId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    guardianName: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    guardianEmail: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    userEmail: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
+      references: {
+        model: "pets",
+        key: "id",
+      },
     },
   },
   {
