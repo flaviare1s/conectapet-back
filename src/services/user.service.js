@@ -14,7 +14,7 @@ export const UserService = {
     }
 
     if (data.senha.length < 6) {
-      const error = new Error("A senha deve conter no mínimo 6 caracteres");
+      const error = new Error("A senha deve conter no mínimo 6 caracteres!");
       error.statusCode = 400;
       throw error;
     }
@@ -32,5 +32,15 @@ export const UserService = {
 
   getUserById: async (id) => {
     return await UserRepository.findById(id);
+  },
+
+  updateUser: async (id, data) => {
+    const [updatedRows] = await UserRepository.update(id, data);
+    if (!updatedRows) return null;
+    return await UserRepository.findById(id);
+  },
+
+  deleteUser: async (id) => {
+    return await UserRepository.delete(id);
   },
 };

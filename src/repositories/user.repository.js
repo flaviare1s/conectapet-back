@@ -30,4 +30,12 @@ export const UserRepository = {
       where: { email },
     });
   },
+
+  async update(id, data) {
+    return await User.update(data, { where: { id } });
+  },
+
+  async delete(id) {
+    return await User.destroy({ where: { id } });
+  },
 };
