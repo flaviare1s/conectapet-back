@@ -17,6 +17,10 @@ export const PetService = {
     return await PetRepository.update(id, data);
   },
 
+  updatePetStatus: async (id, status) => {
+    return await PetRepository.updateStatus(id, status);
+  },
+
   deletePet: async (id) => {
     return await PetRepository.delete(id);
   },

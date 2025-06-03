@@ -38,6 +38,10 @@ export const PetRepository = {
     return await pet.update(petData);
   },
 
+  async updateStatus(id, status) {
+    return await Pet.update({ status }, { where: { id } });
+  }, 
+  
   async delete(id) {
     const pet = await Pet.findByPk(id);
     if (!pet) {

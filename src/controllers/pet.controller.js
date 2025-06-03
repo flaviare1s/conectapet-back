@@ -71,6 +71,23 @@ export const PetController = {
     }
   },
 
+  async updateStatus(req, res) {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+  
+      if (!status) {
+        return res.status(400).json({ error: "Status é obrigatório" });
+      }
+  
+      await PetService.updatePetStatus(id, status);
+  
+      res.status(200).json({ message: "Status atualizado com sucesso" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },  
+
   async delete(req, res) {
     try {
       await PetService.deletePet(req.params.id);
