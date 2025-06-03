@@ -1,4 +1,6 @@
 import { PetService } from "../services/pet.service.js";
+import fs from "fs";
+import path from "path";
 
 export const PetController = {
   async create(req, res) {
@@ -90,12 +92,24 @@ export const PetController = {
 
   async delete(req, res) {
     try {
+      const pet = await PetService.getPetById(req.params.id);
+      if (!pet) {
+        return res.status(404).json({ error: "Pet não encontrado" });
+      }
+
       await PetService.deletePet(req.params.id);
+
+      if (pet.imagem) {
+        const imagePath = path.join("uploads", pet.imagem);
+        fs.unlink(imagePath, (err) => {
+          if (err) {
+            console.error("Erro ao deletar a imagem:", err);
+          }
+        });
+      }
+
       res.status(204).send();
     } catch (error) {
-      if (error.message === "Pet não encontrado") {
-        return res.status(404).json({ error: error.message });
-      }
       res.status(500).json({ error: error.message });
     }
   },
