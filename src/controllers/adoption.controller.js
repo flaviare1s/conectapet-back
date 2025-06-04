@@ -6,7 +6,7 @@ export const AdoptionController = {
       const adoption = await AdoptionService.createAdoption(req.body);
       res.status(201).json(adoption);
     } catch (error) {
-      res.status(error.statusCode || 400).json({ error: error.message });
+      res.status(error.statusCode || 400).json({ message: error.message });
     }
   },
 
@@ -15,7 +15,7 @@ export const AdoptionController = {
       const adoptions = await AdoptionService.getAllAdoptions();
       res.json(adoptions);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ message: error.message });
     }
   },
 
@@ -27,19 +27,25 @@ export const AdoptionController = {
       }
       res.json(adoption);
     } catch (error) {
-      res.status(error.statusCode || 500).json({ error: error.message });
+      res.status(error.statusCode || 500).json({ message: error.message });
     }
   },
 
   async update(req, res) {
     try {
-      const adoption = await AdoptionService.updateAdoption(req.params.id, req.body);
+      const adoption = await AdoptionService.updateAdoption(
+        req.params.id,
+        req.body
+      );
       res.json(adoption);
     } catch (error) {
-      if (error.message === "Adoção não encontrada" || error.statusCode === 404) {
-        return res.status(404).json({ error: error.message });
+      if (
+        error.message === "Adoção não encontrada" ||
+        error.statusCode === 404
+      ) {
+        return res.status(404).json({ message: error.message });
       }
-      res.status(error.statusCode || 400).json({ error: error.message });
+      res.status(error.statusCode || 400).json({ message: error.message });
     }
   },
 
@@ -48,10 +54,13 @@ export const AdoptionController = {
       await AdoptionService.deleteAdoption(req.params.id);
       res.status(204).send();
     } catch (error) {
-      if (error.message === "Adoção não encontrada" || error.statusCode === 404) {
-        return res.status(404).json({ error: error.message });
+      if (
+        error.message === "Adoção não encontrada" ||
+        error.statusCode === 404
+      ) {
+        return res.status(404).json({ message: error.message });
       }
-      res.status(error.statusCode || 400).json({ error: error.message });
+      res.status(error.statusCode || 400).json({ message: error.message });
     }
   },
 };
