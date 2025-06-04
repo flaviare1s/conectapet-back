@@ -33,10 +33,16 @@ export const AdoptionController = {
 
   async update(req, res) {
     try {
-      const adoption = await AdoptionService.updateAdoption(req.params.id, req.body);
+      const adoption = await AdoptionService.updateAdoption(
+        req.params.id,
+        req.body
+      );
       res.json(adoption);
     } catch (error) {
-      if (error.message === "Adoção não encontrada" || error.statusCode === 404) {
+      if (
+        error.message === "Adoção não encontrada" ||
+        error.statusCode === 404
+      ) {
         return res.status(404).json({ error: error.message });
       }
       res.status(error.statusCode || 400).json({ error: error.message });
@@ -48,7 +54,10 @@ export const AdoptionController = {
       await AdoptionService.deleteAdoption(req.params.id);
       res.status(204).send();
     } catch (error) {
-      if (error.message === "Adoção não encontrada" || error.statusCode === 404) {
+      if (
+        error.message === "Adoção não encontrada" ||
+        error.statusCode === 404
+      ) {
         return res.status(404).json({ error: error.message });
       }
       res.status(error.statusCode || 400).json({ error: error.message });
