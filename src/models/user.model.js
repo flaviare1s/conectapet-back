@@ -26,15 +26,15 @@ export const User = connection.define(
       type: DataTypes.ENUM("user", "guardian"),
       allowNull: false,
     },
-    emailVerificado: {
+    emailVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false, // valor padrão: false
     },
-    codigoVerificacao: {
+    verificationCode: {
       type: DataTypes.STRING,
       allowNull: true, // pode ser null até o usuário solicitar verificação
     },
-    codigoExpiracao: {
+    codeExpiration: {
       type: DataTypes.DATE,
       allowNull: true, // pode ser null até o usuário solicitar verificação
     },
