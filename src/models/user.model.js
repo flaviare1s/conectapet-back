@@ -28,7 +28,15 @@ export const User = connection.define(
     },
     emailVerificado: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false, // valor padrão: false
+    },
+    codigoVerificacao: {
+      type: DataTypes.STRING,
+      allowNull: true, // pode ser null até o usuário solicitar verificação
+    },
+    codigoExpiracao: {
+      type: DataTypes.DATE,
+      allowNull: true, // pode ser null até o usuário solicitar verificação
     },
   },
   {
