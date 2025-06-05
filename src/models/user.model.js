@@ -26,6 +26,10 @@ export const User = connection.define(
       type: DataTypes.ENUM("user", "guardian"),
       allowNull: false,
     },
+    emailVerificado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     timestamps: true,
