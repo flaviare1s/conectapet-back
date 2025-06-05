@@ -1,13 +1,13 @@
 type: collection.insomnia.rest/5.0
 name: ConectaPet
 meta:
-  id: wrk_debecb863a7e4e00a88bc7e54c721005
-  created: 1748466740404
-  modified: 1748466740404
+  id: wrk_42565d1447c2470aa77cb7d184b04102
+  created: 1749125427744
+  modified: 1749125427744
 collection:
   - name: users
     meta:
-      id: fld_3baba52b1adf46039a05fbed995dec6c
+      id: fld_603feed7ebf34f20a0374f9c6e83eaa7
       created: 1748466748939
       modified: 1748466748939
       sortKey: -1748466748939
@@ -15,7 +15,7 @@ collection:
       - url: http://localhost:3000/users
         name: getUsers
         meta:
-          id: req_29458e5549324257a62e30790ad1d57f
+          id: req_7cea0a8ceeb64d5ba154a3f3ebedbdfb
           created: 1748466751908
           modified: 1748466804802
           isPrivate: false
@@ -35,7 +35,7 @@ collection:
       - url: http://localhost:3000/users
         name: createUser
         meta:
-          id: req_4826b27b4d774c2d855148ccb07664d1
+          id: req_b9b73f7e61eb4f8891e99c1d8bab44b6
           created: 1748466776178
           modified: 1748788207494
           isPrivate: false
@@ -66,7 +66,7 @@ collection:
       - url: http://localhost:3000/users/2
         name: getUser
         meta:
-          id: req_960ec5ce62d24087b469729a21c57299
+          id: req_74bb3931f77e485ea4b453262e3e9d10
           created: 1748549673370
           modified: 1748793503993
           isPrivate: false
@@ -89,7 +89,7 @@ collection:
       - url: http://localhost:3000/users/1
         name: deletarUser
         meta:
-          id: req_f3fdd264fb194c35805f7a1624ae7032
+          id: req_6bf38c6c5dba481b9c3eba681d033ef2
           created: 1748940519371
           modified: 1748940544521
           isPrivate: false
@@ -109,7 +109,7 @@ collection:
       - url: http://localhost:3000/users/1
         name: atualizarUser
         meta:
-          id: req_01548d7d15554c9881f4716c8e748921
+          id: req_7d3d4cd4e3224dac85a247f0cec11e28
           created: 1748940547931
           modified: 1748940569340
           isPrivate: false
@@ -128,7 +128,7 @@ collection:
           rebuildPath: true
   - name: auth
     meta:
-      id: fld_3a4b5c013bec4811a2b1615e84d3311e
+      id: fld_33dec4e8f2ca4220ba81be765d95d193
       created: 1748788079556
       modified: 1748788079556
       sortKey: -1748788079556
@@ -136,7 +136,7 @@ collection:
       - url: http://localhost:3000/login
         name: login
         meta:
-          id: req_dbe438e5eed2499d84b946aba8ec35ec
+          id: req_de9961d901544c3cb428df06c173bbb1
           created: 1748788082360
           modified: 1748940684260
           isPrivate: false
@@ -164,7 +164,7 @@ collection:
           rebuildPath: true
   - name: pets
     meta:
-      id: fld_1ba4a580e28a4314ba1d45f69d3cd930
+      id: fld_afd550665f08454c915e2603313ab1ea
       created: 1748882486789
       modified: 1748882486789
       sortKey: -1748413915167
@@ -172,7 +172,7 @@ collection:
       - url: http://localhost:3000/pets
         name: getPets
         meta:
-          id: req_c4513b2b96824dc48399d9ca0978d45f
+          id: req_41b08357ed7d4322989481e1c1a1a1e6
           created: 1748882486790
           modified: 1748882514582
           isPrivate: false
@@ -192,7 +192,7 @@ collection:
       - url: http://localhost:3000/pets
         name: createPet
         meta:
-          id: req_3dbb238b7b604e85be9ec68f553eeca7
+          id: req_233768db6fd14550800dc77e38e375c2
           created: 1748882486791
           modified: 1748941165319
           isPrivate: false
@@ -201,54 +201,54 @@ collection:
         body:
           mimeType: multipart/form-data
           params:
-            - id: pair_e404a6e025cf4ac39a19f9fe6a7e8cd9
-              name: nome
+            - name: nome
               value: Lolinha
               disabled: false
-            - id: pair_1724c91e536e4c15bf19a0da49126440
-              name: tipo
+              id: pair_e404a6e025cf4ac39a19f9fe6a7e8cd9
+            - name: tipo
               value: cachorro
               disabled: false
-              type: text
               multiline: false
-            - id: pair_040c6c2833a44be9abd306e7b84049dd
-              name: idade
+              id: pair_1724c91e536e4c15bf19a0da49126440
+              type: text
+            - name: idade
               value: 2 anos
               disabled: false
-            - id: pair_1614f66eccf843afb45ef0975b386723
-              name: descricao
+              id: pair_040c6c2833a44be9abd306e7b84049dd
+            - name: descricao
               value: teste
               disabled: false
-            - id: pair_a55b7131a11742a4bb4b58b7c17e6cb4
-              name: porte
+              id: pair_1614f66eccf843afb45ef0975b386723
+            - name: porte
               value: pequeno
               disabled: false
-            - id: pair_eef5a1b555754a14adc59c44d6838641
-              name: sexo
+              id: pair_a55b7131a11742a4bb4b58b7c17e6cb4
+            - name: sexo
               value: femea
               disabled: false
-            - id: pair_1354eada41514533ae31765eeadbee74
-              name: vacinado
+              id: pair_eef5a1b555754a14adc59c44d6838641
+            - name: vacinado
               value: sim
               disabled: false
-            - id: pair_55c4b34a09d34e7199bda5379a9cc49d
-              name: castrado
+              id: pair_1354eada41514533ae31765eeadbee74
+            - name: castrado
               value: sim
               disabled: false
-            - id: pair_324c338ef976432f82c06d6228f71162
-              name: imagem
+              id: pair_55c4b34a09d34e7199bda5379a9cc49d
+            - name: imagem
               disabled: false
-              type: file
               multiline: true
+              id: pair_324c338ef976432f82c06d6228f71162
               fileName: C:\Users\flavi\Downloads\lolinha.jpg
-            - id: pair_cd97906d9bb9493894d25c95f1ba4f24
-              name: status
+              type: file
+            - name: status
               value: quase lá!
               disabled: false
-            - id: pair_3d52ef6248724bf9860567b4ca012c01
-              name: guardianId
+              id: pair_cd97906d9bb9493894d25c95f1ba4f24
+            - name: guardianId
               value: "1"
               disabled: false
+              id: pair_3d52ef6248724bf9860567b4ca012c01
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -268,7 +268,7 @@ collection:
       - url: http://localhost:3000/pets/1
         name: getPet
         meta:
-          id: req_6482924e747e414287c5b8027c1cc08f
+          id: req_89e3b42fec2147118d2c08d18430c56a
           created: 1748882486793
           modified: 1748940893311
           isPrivate: false
@@ -290,7 +290,7 @@ collection:
       - url: http://localhost:3000/pets/1
         name: deletarPet
         meta:
-          id: req_bf7590394cba4b0db51743ef55c9d535
+          id: req_14cedd31fe5c4883b23f8f2f0c93472c
           created: 1748940591357
           modified: 1748941174715
           isPrivate: false
@@ -313,7 +313,7 @@ collection:
       - url: http://localhost:3000/pets/2
         name: atualizarPet
         meta:
-          id: req_5b61049a38db438db95ee22b3de8b8ff
+          id: req_959917de80824f44983856e652a2f3bd
           created: 1748941352629
           modified: 1748941375254
           isPrivate: false
@@ -322,54 +322,54 @@ collection:
         body:
           mimeType: multipart/form-data
           params:
-            - id: pair_e404a6e025cf4ac39a19f9fe6a7e8cd9
-              name: nome
+            - name: nome
               value: Lola
               disabled: false
-            - id: pair_1724c91e536e4c15bf19a0da49126440
-              name: tipo
+              id: pair_e404a6e025cf4ac39a19f9fe6a7e8cd9
+            - name: tipo
               value: cachorro
               disabled: false
-              type: text
               multiline: false
-            - id: pair_040c6c2833a44be9abd306e7b84049dd
-              name: idade
+              id: pair_1724c91e536e4c15bf19a0da49126440
+              type: text
+            - name: idade
               value: 2 anos
               disabled: false
-            - id: pair_1614f66eccf843afb45ef0975b386723
-              name: descricao
+              id: pair_040c6c2833a44be9abd306e7b84049dd
+            - name: descricao
               value: teste
               disabled: false
-            - id: pair_a55b7131a11742a4bb4b58b7c17e6cb4
-              name: porte
+              id: pair_1614f66eccf843afb45ef0975b386723
+            - name: porte
               value: pequeno
               disabled: false
-            - id: pair_eef5a1b555754a14adc59c44d6838641
-              name: sexo
+              id: pair_a55b7131a11742a4bb4b58b7c17e6cb4
+            - name: sexo
               value: femea
               disabled: false
-            - id: pair_1354eada41514533ae31765eeadbee74
-              name: vacinado
+              id: pair_eef5a1b555754a14adc59c44d6838641
+            - name: vacinado
               value: sim
               disabled: false
-            - id: pair_55c4b34a09d34e7199bda5379a9cc49d
-              name: castrado
+              id: pair_1354eada41514533ae31765eeadbee74
+            - name: castrado
               value: sim
               disabled: false
-            - id: pair_324c338ef976432f82c06d6228f71162
-              name: imagem
+              id: pair_55c4b34a09d34e7199bda5379a9cc49d
+            - name: imagem
               disabled: false
-              type: file
               multiline: true
+              id: pair_324c338ef976432f82c06d6228f71162
               fileName: C:\Users\flavi\Downloads\lolinha.jpg
-            - id: pair_cd97906d9bb9493894d25c95f1ba4f24
-              name: status
+              type: file
+            - name: status
               value: quase lá!
               disabled: false
-            - id: pair_3d52ef6248724bf9860567b4ca012c01
-              name: guardianId
+              id: pair_cd97906d9bb9493894d25c95f1ba4f24
+            - name: guardianId
               value: "1"
               disabled: false
+              id: pair_3d52ef6248724bf9860567b4ca012c01
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -388,7 +388,7 @@ collection:
           rebuildPath: true
   - name: adoptions
     meta:
-      id: fld_117056de27c045f59736a7311f19e447
+      id: fld_9578c0c57b3f4906aea4cc7c8e9e2fd6
       created: 1748940749697
       modified: 1748940749697
       sortKey: -1748387498281
@@ -396,7 +396,7 @@ collection:
       - url: http://localhost:3000/adoptions
         name: getAdoptions
         meta:
-          id: req_7ad49e9d3b594c7482412da79645b795
+          id: req_33fceec2c10741e4b379e4b934e57ae1
           created: 1748940749698
           modified: 1748940815753
           isPrivate: false
@@ -416,14 +416,36 @@ collection:
       - url: http://localhost:3000/adoptions
         name: createAdoption
         meta:
-          id: req_2f8ffc50675b48d1b3bcac38ff68ff53
+          id: req_ff149deaa9e24fcbb4aa16d61f3b78db
           created: 1748940749701
-          modified: 1748940856836
+          modified: 1749125778484
           isPrivate: false
           sortKey: -1748466776178
         method: POST
         body:
           mimeType: application/json
+          text: |-
+            {
+              "nome": "Maria da Silva",
+              "dataN": "1990-05-20",
+              "cpf": "123.456.789-00",
+              "ec": "solteiro",
+              "profissao": "Professora",
+              "cel": "(11) 91234-5678",
+              "cep": "12345-678",
+              "rua": "Rua das Flores",
+              "bairro": "Centro",
+              "numero": "123",
+              "cidade": "São Paulo",
+              "termo": true,
+              "custos": "sim",
+              "compromisso": "sim",
+              "visitas": "sim",
+              "motivacao": "Quero adotar um pet para fazer companhia em casa.",
+              "favoritado": false,
+              "userId": 2,
+              "petId": 1
+            }
         headers:
           - name: Content-Type
             value: application/json
@@ -442,7 +464,7 @@ collection:
       - url: http://localhost:3000/adoptions/1
         name: getAdoption
         meta:
-          id: req_c7fd49c0fc18408dad42e953c298435b
+          id: req_8085f81ee2b743388d5a6f7351e0b14d
           created: 1748940749702
           modified: 1748940886435
           isPrivate: false
@@ -464,7 +486,7 @@ collection:
       - url: http://localhost:3000/adoptions/1
         name: deletarAdoption
         meta:
-          id: req_127868b903fc469098f878d25d9a2ff3
+          id: req_c50d560b61094398ae2b18b0d0a9b33f
           created: 1748940749704
           modified: 1748941410295
           isPrivate: false
@@ -487,7 +509,7 @@ collection:
       - url: http://localhost:3000/adoptions
         name: AtualizarAdopition
         meta:
-          id: req_868139c88cc041e285a285c2ba851a0b
+          id: req_53fd32da038643f88fdb05851a818179
           created: 1748940749705
           modified: 1748940835344
           isPrivate: false
@@ -507,13 +529,13 @@ collection:
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_f36c28eec9fe26dd0ffc360e8a822f759fe16d05
+    id: jar_50ee2e8960f74799ac0521694ef191c5
     created: 1748466740411
     modified: 1748466740411
 environments:
   name: Base Environment
   meta:
-    id: env_f36c28eec9fe26dd0ffc360e8a822f759fe16d05
+    id: env_db919977f4174fd18f2b68d4c91990b5
     created: 1748466740409
     modified: 1748941140581
     isPrivate: false
