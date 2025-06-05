@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadDir)) {
 const startServer = async () => {
   try {
     await connection.authenticate();
-    await connection.sync({ force: false });
+    await connection.sync({ force: true });
     console.log("Tabelas criadas ou verificadas com sucesso!");
     app.listen(PORT, () => {
       console.log(`Servidor rodando em http://localhost:${PORT}`);
