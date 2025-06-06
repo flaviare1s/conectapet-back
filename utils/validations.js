@@ -48,7 +48,7 @@ export const adoptionValidation = Joi.object({
     nome: Joi.string().max(150).required(),
     dataN: Joi.date().iso().less('now').required(),
     cpf: Joi.string().pattern(/^\d{11}$/).required(),
-    ec: Joi.string().valid('solteiro', 'casado', 'divorciado', 'viúvo').required(),
+    ec: Joi.string().valid('solteiro', 'casado', 'divorciado', 'viuvo').required(),
     profissao: Joi.string().optional(),
     cel: Joi.string().pattern(/^\d{10,11}$/).required(),
     cep: Joi.string().pattern(/^\d{8}$/).required(),
@@ -58,7 +58,7 @@ export const adoptionValidation = Joi.object({
     cidade: Joi.string().required(),
     termo: Joi.boolean().valid(true).required(),
     custos: Joi.string().valid('sim', 'não').required(),
-    comprimisso: Joi.string().valid('sim', 'não').required(),
+    compromisso: Joi.string().valid('sim', 'não').required(),
     visitas: Joi.string().valid('sim', 'não').required(),
     motivacao: Joi.string().optional(),
     favoritado: Joi.string().optional()
@@ -78,7 +78,7 @@ export const adoptUpdateValidation = Joi.object({
     cidade: Joi.string(),
     termo: Joi.boolean().valid(true),
     custos: Joi.string().valid('sim', 'não'),
-    comprimisso: Joi.string().valid('sim', 'não'),
+    compromisso: Joi.string().valid('sim', 'não'),
     visitas: Joi.string().valid('sim', 'não'),
     motivacao: Joi.string().optional(),
     favoritado: Joi.string().optional()
