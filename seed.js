@@ -1,5 +1,6 @@
 import { seedUsers } from "./src/seeders/userSeed.js";
 import { petSeeds } from "./src/seeders/petSeeds.js";
+import { adoptionSeeds } from "./src/seeders/adoptionSeeds.js";
 import { connection } from "./src/config/database.js";
 
 async function runSeed() {
@@ -9,6 +10,7 @@ async function runSeed() {
     
     await seedUsers();
     await petSeeds();
+    await adoptionSeeds();
 
     console.log("Seed executada com sucesso");
     process.exit(0);
