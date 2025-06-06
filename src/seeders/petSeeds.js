@@ -42,7 +42,7 @@ export async function petSeeds() {
     {
       tipo: "cachorro",
       nome: "Marley",
-      idade: "3 meses",
+      idade: "4 meses",
       imagem: "../pet-seeds-img/marley-cachorro.jpg",
       descricao: "Cachorro esperto e leal.",
       observacoes: null,
@@ -65,12 +65,12 @@ export async function petSeeds() {
       sexo: "fêmea",
       vacinado: "sim",
       castrado: "sim",
-      guardianId: 3,
+      guardianId: 4,
     },
     {
       tipo: "gato",
       nome: "Misty",
-      idade: "3 anos",
+      idade: "4 anos",
       imagem: "../pet-seeds-img/misty-gata.jpg",
       descricao: "Muito calma e companheira.",
       observacoes: null,
@@ -84,7 +84,7 @@ export async function petSeeds() {
     {
       tipo: "cachorro",
       nome: "Rex",
-      idade: "3 anos",
+      idade: "4 anos",
       imagem: "../pet-seeds-img/rex-cachorro.jpg",
       descricao: "Cão protetor e leal.",
       observacoes: "Ideal para quintal.",
@@ -186,7 +186,7 @@ export async function petSeeds() {
       imagem: "../pet-seeds-img/wandinha-gata.jpg",
       descricao: "Gatinha tímida no começo, mas muito carinhosa.",
       observacoes: null,
-      status: "Coração livren!",
+      status: "Coração livre!",
       porte: "pequeno",
       sexo: "fêmea",
       vacinado: "sim",
@@ -210,7 +210,7 @@ export async function petSeeds() {
     {
       tipo: "gato",
       nome: "Nick",
-      idade: "3 anos",
+      idade: "4 anos",
       imagem: "../pet-seeds-img/nick-gato.jpg",
       descricao: "Tranquila e muito educada.",
       observacoes: null,
@@ -219,7 +219,7 @@ export async function petSeeds() {
       sexo: "fêmea",
       vacinado: "não",
       castrado: "sim",
-      guardianId: 3,
+      guardianId: 4,
     },
     {
       tipo: "gato",
@@ -247,7 +247,7 @@ export async function petSeeds() {
       sexo: "macho",
       vacinado: "sim",
       castrado: "sim",
-      guardianId: 3,
+      guardianId: 4,
     },
     {
       tipo: "cachorro",
@@ -266,7 +266,7 @@ export async function petSeeds() {
     {
       tipo: "gato",
       nome: "Belota",
-      idade: "3 anos",
+      idade: "4 anos",
       imagem: "../pet-seeds-img/belota-gata.jpg",
       descricao: "Muito protetora e doce.",
       observacoes: null,
