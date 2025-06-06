@@ -68,7 +68,7 @@ export const adoptUpdateValidation = Joi.object({
     nome: Joi.string().max(150),
     dataN: Joi.date().iso().less('now'),
     cpf: Joi.string().pattern(/^\d{11}$/),
-    ec: Joi.string().valid('solteiro', 'casado', 'divorciado', 'viúvo'),
+    ec: Joi.string().valid('solteiro', 'casado', 'divorciado', 'viuvo'),
     profissao: Joi.string().optional(),
     cel: Joi.string().pattern(/^\d{10,11}$/),
     cep: Joi.string().pattern(/^\d{8}$/),
