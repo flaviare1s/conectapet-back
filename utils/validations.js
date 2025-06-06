@@ -61,7 +61,9 @@ export const adoptionValidation = Joi.object({
     compromisso: Joi.string().valid('sim', 'não').required(),
     visitas: Joi.string().valid('sim', 'não').required(),
     motivacao: Joi.string().optional(),
-    favoritado: Joi.string().optional()
+    favoritado: Joi.boolean().default(false),
+    userId: Joi.number().required(),
+    petId: Joi.number().required(),
 })
 
 export const adoptUpdateValidation = Joi.object({
@@ -81,5 +83,7 @@ export const adoptUpdateValidation = Joi.object({
     compromisso: Joi.string().valid('sim', 'não'),
     visitas: Joi.string().valid('sim', 'não'),
     motivacao: Joi.string().optional(),
-    favoritado: Joi.string().optional()
+    favoritado: Joi.boolean().default(false),
+    userId: Joi.number().required(),
+    petId: Joi.number().required(),
 })
