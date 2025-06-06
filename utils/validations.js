@@ -84,6 +84,6 @@ export const adoptUpdateValidation = Joi.object({
     visitas: Joi.string().valid('sim', 'não'),
     motivacao: Joi.string().optional(),
     favoritado: Joi.boolean().optional().default(false),
-    userId: Joi.number().required(),
-    petId: Joi.number().required(),
+    userId: Joi.number().optional(),
+    petId: Joi.number().optional(),
 })
