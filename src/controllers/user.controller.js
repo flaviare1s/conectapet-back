@@ -1,12 +1,18 @@
 import { UserService } from "../services/user.service.js";
+import { userValidation, userUpdateValidation } from "../../utils/validations.js";
 
 export const UserController = {
   async create(req, res) {
+    const { error } = userValidation.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
     try {
       const user = await UserService.createUser(req.body);
       res.status(201).json(user);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   },
 
@@ -32,6 +38,11 @@ export const UserController = {
   },
 
   async update(req, res) {
+    const { error } = userUpdateValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+    
     try {
       const updated = await UserService.updateUser(req.params.id, req.body);
       if (updated === null) {

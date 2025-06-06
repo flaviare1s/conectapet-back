@@ -1,7 +1,13 @@
+import { adoptionValidation, adoptUpdateValidation } from "../../utils/validations.js";
 import { AdoptionService } from "../services/adoption.service.js";
 
 export const AdoptionController = {
   async create(req, res) {
+    const { error } = adoptionValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const adoption = await AdoptionService.createAdoption(req.body);
       res.status(201).json(adoption);
@@ -32,6 +38,12 @@ export const AdoptionController = {
   },
 
   async update(req, res) {
+    const { error } = adoptUpdateValidation.validate(req.body)
+
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const adoption = await AdoptionService.updateAdoption(
         req.params.id,
