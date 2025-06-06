@@ -16,14 +16,22 @@ export const AdoptionController = {
     }
   },
 
-  async getAll(_req, res) {
-    try {
-      const adoptions = await AdoptionService.getAllAdoptions();
-      res.json(adoptions);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  async getAll(req, res) {
+  try {
+    const { petId } = req.query;
+
+    let adoptions;
+    if (petId) {
+      adoptions = await AdoptionService.getAdoptionsByPetId(petId);
+    } else {
+      adoptions = await AdoptionService.getAllAdoptions();
     }
-  },
+
+    res.json(adoptions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+},
 
   async getById(req, res) {
     try {
