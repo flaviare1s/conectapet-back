@@ -39,6 +39,7 @@ export const AdoptionController = {
 
   async update(req, res) {
     const { error } = adoptUpdateValidation.validate(req.body)
+
     if (error) {
       return res.status(400).json({ error: error.details[0].message })
     }
