@@ -17,32 +17,35 @@ export const userUpdateValidation = Joi.object({
 })
 
 export const petValidation = Joi.object({
-    tipo: Joi.string().valid('cachorro', 'gato').required(),
-    nome: Joi.string().max(50).required(),
-    idade: Joi.string().max(20).required(),
-    imagem: Joi.string().required(),
-    descricao: Joi.string().required(),
-    observacoes: Joi.string().optional(),
-    status: Joi.string().valid("Coração livre!", "Quase lá!", "Final feliz!").required(),
-    porte: Joi.string().valid("pequeno", "médio", "grande").required(),
-    sexo: Joi.string().valid('macho', 'fêmea').required(),
-    vacinado: Joi.string().valid('sim', 'não').required(),
-    castrado: Joi.string().valid('sim', 'não').required()
+  tipo: Joi.string().valid("cachorro", "gato").required(),
+  nome: Joi.string().max(50).required(),
+  idade: Joi.string().max(20).required(),
+  descricao: Joi.string().required(),
+  observacoes: Joi.string().optional(),
+  status: Joi.string()
+    .valid("Coração livre!", "Quase lá!", "Final feliz!")
+    .required(),
+  porte: Joi.string().valid("pequeno", "médio", "grande").required(),
+  sexo: Joi.string().valid("macho", "fêmea").required(),
+  vacinado: Joi.string().valid("sim", "não").required(),
+  castrado: Joi.string().valid("sim", "não").required(),
 })
+  .unknown(true);
 
-export const petUpdateValidation = Joi.object({
-    tipo: Joi.string().valid('cachorro', 'gato'),
+  export const petUpdateValidation = Joi.object({
+    tipo: Joi.string().valid("cachorro", "gato"),
     nome: Joi.string().max(50),
     idade: Joi.string().max(20),
-    imagem: Joi.string(),
     descricao: Joi.string(),
-    observacoes: Joi.string().optional(),
+    observacoes: Joi.string().allow("").optional(),
     status: Joi.string().valid("Coração livre!", "Quase lá!", "Final feliz!"),
     porte: Joi.string().valid("pequeno", "médio", "grande"),
-    sexo: Joi.string().valid('macho', 'fêmea'),
-    vacinado: Joi.string().valid('sim', 'não'),
-    castrado: Joi.string().valid('sim', 'não')
-})
+    sexo: Joi.string().valid("macho", "fêmea"),
+    vacinado: Joi.string().valid("sim", "não"),
+    castrado: Joi.string().valid("sim", "não"),
+  })
+    .unknown(true)
+    .min(1);
 
 export const adoptionValidation = Joi.object({
     nome: Joi.string().max(150).required(),
