@@ -68,7 +68,7 @@ export const UserController = {
 
   async verifyEmail(req, res) {
     try {
-      const { email, code } = req.body;
+      const { email, verificationCode } = req.body;
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
@@ -79,7 +79,7 @@ export const UserController = {
         return res.status(400).json({ error: "Email já verificado!" });
       }
 
-      if (user.verificationCode !== code) {
+      if (user.verificationCode !== verificationCode) {
         return res.status(401).json({ error: "Código inválido!" });
       }
 

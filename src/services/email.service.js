@@ -27,7 +27,7 @@ export const sendVerificationEmail = async (email, verificationCode) => {
         await transporter.sendMail(mailOptions);
         return true;
     } catch (error) {
-        console.log('Erro ao enviar o e-mail', error);
+        console.error('Erro ao enviar o e-mail:', error); // Mostra erro detalhado
         return false;
     }
 };
