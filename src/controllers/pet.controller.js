@@ -60,26 +60,36 @@ export const PetController = {
   },
 
   async update(req, res) {
-    const { error } = petUpdateValidation.validate(req.body)
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message })
-    }
-
     try {
+      const petExistente = await PetService.getPetById(req.params.id);
+      if (!petExistente) {
+        return res.status(404).json({ error: "Pet não encontrado" });
+      }
+  
       const petData = {
         ...req.body,
+        imagem: petExistente.imagem,
       };
-
+  
       if (req.file) {
+        const imagemAntigaPath = path.join(__dirname, '..', 'public', 'uploads', petExistente.imagem);
+        try {
+          await fs.unlink(imagemAntigaPath);
+        } catch (err) {
+          console.warn(`Não foi possível deletar a imagem antiga: ${err.message}`);
+        }
         petData.imagem = req.file.filename;
       }
-
+  
+      const { error } = petUpdateValidation.validate(petData);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+  
       const petAtualizado = await PetService.updatePet(req.params.id, petData);
       res.json(petAtualizado);
     } catch (error) {
-      if (error.message === "Pet não encontrado") {
-        return res.status(404).json({ error: error.message });
-      }
+      console.error(error);
       res.status(400).json({ error: error.message });
     }
   },
