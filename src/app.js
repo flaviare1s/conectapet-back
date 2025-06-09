@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.routes.js";
 import petRouter from "./routes/pet.routes.js";
 import path from "path";
 import adoptionRouter from "./routes/adoption.routes.js";
+import { errorHandler } from "./middlewares/errorHandler.js"
 
 export const app = express();
 
@@ -18,4 +19,6 @@ app.use('/users', userRouter);
 app.use("/login", authRouter);
 app.use("/pets", petRouter);
 app.use("/adoptions", adoptionRouter);
-        
+
+// Middleware de tratamento de erros
+app.use(errorHandler);
