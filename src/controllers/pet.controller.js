@@ -1,7 +1,7 @@
 import { PetService } from "../services/pet.service.js";
 import fs from "fs";
 import path from "path";
-import { petUpdateValidation, petValidation } from "../../utils/validations.js";
+import { petUpdateValidation, petValidation } from "../utils/validations.js";
 
 export const PetController = {
   async create(req, res) {
