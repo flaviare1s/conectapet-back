@@ -1,5 +1,5 @@
 import { UserService } from "../services/user.service.js";
-import { userValidation, userUpdateValidation } from "../../utils/validations.js";
+import { userValidation, userUpdateValidation } from "../utils/validations.js";
 
 export const UserController = {
   async create(req, res) {

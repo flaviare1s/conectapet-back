@@ -1,4 +1,4 @@
-import { adoptionValidation, adoptUpdateValidation } from "../../utils/validations.js";
+import { adoptionValidation, adoptUpdateValidation } from "../utils/validations.js";
 import { AdoptionService } from "../services/adoption.service.js";
 
 export const AdoptionController = {
