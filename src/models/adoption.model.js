@@ -75,7 +75,7 @@ export const Adoption = connection.define(
     },
     favoritado: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       defaultValue: false,
     },    
     userId: {

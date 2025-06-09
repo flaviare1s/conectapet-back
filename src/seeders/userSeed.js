@@ -7,27 +7,38 @@ export async function seedUsers() {
   const users = [
     {
       nome: "João Silva",
-      email: "joao.silva@example.com",
+      email: "joao@teste.com",
       senha: senhaHash,
       role: "user",
+      emailVerificado: true,  
     },
     {
       nome: "APATA",
       email: "apata@teste.com",
       senha: senhaHash,
       role: "guardian",
+      emailVerificado: true,  
     },
     {
       nome: "Maria de Sousa",
       email: "maria@teste.com",
       senha: senhaHash,
       role: "user",
+      emailVerificado: true,  
     },
     {
       nome: "UPAC",
       email: "upac@teste.com",
       senha: senhaHash,
       role: "guardian",
+      emailVerificado: true,  
+    },
+    {
+      nome: "Abrigo São Lázaro",
+      email: "asl@teste.com",
+      senha: senhaHash,
+      role: "guardian",
+      emailVerificado: true,  
     },
   ];
 

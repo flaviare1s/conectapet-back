@@ -1,9 +1,15 @@
 import { PetService } from "../services/pet.service.js";
 import fs from "fs";
 import path from "path";
+import { petUpdateValidation, petValidation } from "../../utils/validations.js";
 
 export const PetController = {
   async create(req, res) {
+    const { error } = petValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const petData = {
         ...req.body,
@@ -54,6 +60,11 @@ export const PetController = {
   },
 
   async update(req, res) {
+    const { error } = petUpdateValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const petData = {
         ...req.body,

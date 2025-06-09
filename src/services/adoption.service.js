@@ -45,4 +45,9 @@ export const AdoptionService = {
   deleteAdoption: async (id) => {
     return await AdoptionRepository.delete(id);
   },
+
+  getAdoptionsByPetId: async (petId) => {
+  return await AdoptionRepository.findAllByPetId(petId);
+},
+
 };
