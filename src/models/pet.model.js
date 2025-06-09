@@ -68,3 +68,14 @@ export const Pet = connection.define(
     updatedAt: "updatedAt",
   }
 );
+
+Pet.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+  if (values.createdAt) {
+    values.createdAt = new Date(values.createdAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  }
+  if (values.updatedAt) {
+    values.updatedAt = new Date(values.updatedAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  }
+  return values;
+};

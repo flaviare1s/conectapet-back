@@ -35,5 +35,22 @@ export const User = connection.define(
     timestamps: true,
     createdAt: "createdAt",
     updatedAt: "updatedAt",
+    defaultScope: {
+      attributes: {
+        // Converte os timestamps para o horário de Brasília ao serializar para JSON
+        include: [],
+      },
+    },
   }
 );
+
+User.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+  if (values.createdAt) {
+    values.createdAt = new Date(values.createdAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  }
+  if (values.updatedAt) {
+    values.updatedAt = new Date(values.updatedAt).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  }
+  return values;
+};
