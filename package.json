@@ -11,7 +11,8 @@
     "mysql2": "^3.14.1",
     "nodemon": "^3.1.10",
     "sequelize": "^6.37.7",
-    "sequelize-cli": "^6.6.3"
+    "sequelize-cli": "^6.6.3",
+    "sqlite3": "^5.1.7"
   },
   "name": "2_backend-pet",
   "version": "1.0.0",
@@ -19,9 +20,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "coverage": "cross-env NODE_ENV=test node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage"
   },
   "repository": {
     "type": "git",
@@ -33,5 +35,10 @@
   "bugs": {
     "url": "https://github.com/flaviare1s/conectapet-back/issues"
   },
-  "homepage": "https://github.com/flaviare1s/conectapet-back#readme"
+  "homepage": "https://github.com/flaviare1s/conectapet-back#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^30.0.0",
+    "supertest": "^7.1.1"
+  }
 }
