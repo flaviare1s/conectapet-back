@@ -1,7 +1,13 @@
+import { adoptionValidation, adoptUpdateValidation } from "../utils/validations.js";
 import { AdoptionService } from "../services/adoption.service.js";
 
 export const AdoptionController = {
   async create(req, res) {
+    const { error } = adoptionValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const adoption = await AdoptionService.createAdoption(req.body);
       res.status(201).json(adoption);
@@ -10,14 +16,22 @@ export const AdoptionController = {
     }
   },
 
-  async getAll(_req, res) {
-    try {
-      const adoptions = await AdoptionService.getAllAdoptions();
-      res.json(adoptions);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  async getAll(req, res) {
+  try {
+    const { petId } = req.query;
+
+    let adoptions;
+    if (petId) {
+      adoptions = await AdoptionService.getAdoptionsByPetId(petId);
+    } else {
+      adoptions = await AdoptionService.getAllAdoptions();
     }
-  },
+
+    res.json(adoptions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+},
 
   async getById(req, res) {
     try {
@@ -32,6 +46,12 @@ export const AdoptionController = {
   },
 
   async update(req, res) {
+    const { error } = adoptUpdateValidation.validate(req.body)
+
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message })
+    }
+
     try {
       const adoption = await AdoptionService.updateAdoption(
         req.params.id,

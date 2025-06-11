@@ -7,29 +7,50 @@ export const AdoptionRepository = {
     return await Adoption.create(adoptionData);
   },
 
-  async findAll() {
-    return await Adoption.findAll({
-      include: [
-        {
-          model: Pet,
-          as: "pet",
-          attributes: ["id", "nome", "tipo", "idade", "imagem", "descricao"],
-          include: [
-            {
-              model: User,
-              as: "guardian",
-              attributes: ["id", "nome", "email"],
-            },
-          ],
-        },
-        {
-          model: User,
-          as: "adopter",
-          attributes: ["id", "nome", "email"],
-        },
-      ],
-    });
-  },
+  async findAll(){
+        return await Adoption.findAll({
+            include:[
+                {
+                    model: Pet,
+                    as: 'pet',
+                    attributes:['id','nome','tipo','idade','imagem','descricao']    ,
+                    include:[
+                        {
+                            model:User,
+                            as: 'guardian',
+                            attributes:['id','nome','email'],
+                        }
+                    ]
+
+                }
+            ]
+        });
+    },
+
+  findAllByPetId: async (petId) => {
+  return await Adoption.findAll({
+    where: { petId },
+    include: [
+      {
+        model: Pet,
+        as: "pet",
+        attributes: ["id", "nome", "tipo", "idade", "imagem", "descricao"],
+        include: [
+          {
+            model: User,
+            as: "guardian",
+            attributes: ["id", "nome", "email"],
+          },
+        ],
+      },
+      {
+        model: User,
+        as: "adopter",
+        attributes: ["id", "nome", "email"],
+      },
+    ],
+  });
+},
 
   async findById(id) {
     return await Adoption.findByPk(id, {

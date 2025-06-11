@@ -50,4 +50,9 @@ export const AdoptionService = {
    
     return await AdoptionRepository.delete(id);
   },
+
+  getAdoptionsByPetId: async (petId) => {
+  return await AdoptionRepository.findAllByPetId(petId);
+},
+
 };
