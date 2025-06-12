@@ -116,46 +116,6 @@ export const UserController = {
       const { email, verificationCode } = req.body;
 
       const pending = await PendingUser.findOne({ where: { email } });
-      if (!pending) {
-        return res
-          .status(404)
-          .json({ message: "Pré-cadastro não encontrado." });
-      }
-
-      if (
-        pending.verificationCode !== verificationCode ||
-        new Date() > new Date(pending.codeExpiration)
-      ) {
-        return res
-          .status(400)
-          .json({ message: "Código inválido ou expirado." });
-      }
-
-      // Cria usuário definitivo
-      const newUser = await User.create({
-        nome: pending.nome,
-        email: pending.email,
-        senha: pending.senha, // já está hash
-        role: pending.role,
-        emailVerified: true,
-      });
-
-      await pending.destroy();
-
-      return res
-        .status(201)
-        .json({ message: "E-mail verificado com sucesso!", user: newUser });
-    } catch (error) {
-      console.error("Erro ao verificar e-mail:", error);
-      return res.status(500).json({ message: "Erro interno do servidor." });
-    }
-  },
-
-  async verifyEmail(req, res) {
-    try {
-      const { email, verificationCode } = req.body;
-
-      const pending = await PendingUser.findOne({ where: { email } });
 
       if (!pending) {
         return res
