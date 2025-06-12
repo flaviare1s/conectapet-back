@@ -1,23 +1,25 @@
 import { UserService } from "../services/user.service.js";
 import { sendVerificationEmail } from "../services/email.service.js";
 import { User } from "../models/user.model.js";
-import crypto from "crypto";
-import { userValidation, userUpdateValidation } from "../utils/validations.js";
+import { PendingUser } from "../models/pendingUser.model.js";
+import { userUpdateValidation } from "../utils/validations.js";
+import bcrypt from "bcrypt";
+import { pendingUserValidation } from "../utils/validations.js";
 
 export const UserController = {
-  async create(req, res) {
-    const { error } = userValidation.validate(req.body);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
+  // async create(req, res) {
+  //   const { error } = userValidation.validate(req.body);
+  //   if (error) {
+  //     return res.status(400).json({ error: error.details[0].message });
+  //   }
 
-    try {
-      const user = await UserService.createUser(req.body);
-      res.status(201).json(user);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
+  //   try {
+  //     const user = await UserService.createUser(req.body);
+  //     res.status(201).json(user);
+  //   } catch (err) {
+  //     res.status(400).json({ error: err.message });
+  //   }
+  // },
 
   async getAll(_req, res) {
     try {
@@ -42,83 +44,159 @@ export const UserController = {
 
   async requestVerification(req, res) {
     try {
-      const { email } = req.body;
-      const user = await User.findOne({ where: { email } });
-
-      if (!user) {
-        return res.status(404).json({ error: "Usuário não encontrado!" });
+      const { error } = pendingUserValidation.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
       }
 
-      if (user.emailVerified) {
-        return res.status(400).json({ error: "Email já verificado!" });
+      const { nome, email, senha, role } = req.body;
+
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser && existingUser.emailVerified) {
+        return res
+          .status(400)
+          .json({ message: "Email já está cadastrado e verificado." });
       }
 
-      const verificationCode = crypto.randomInt(100000, 999999).toString();
+      const pendingUser = await PendingUser.findOne({ where: { email } });
+      if (pendingUser) {
+        // Reenvia código
+        const verificationCode = Math.floor(
+          100000 + Math.random() * 900000
+        ).toString();
+        const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
+        await pendingUser.update({ verificationCode, codeExpiration });
+
+        const emailSent = await sendVerificationEmail(email, verificationCode);
+        if (!emailSent) {
+          return res
+            .status(500)
+            .json({ message: "Erro ao enviar o e-mail de verificação." });
+        }
+
+        return res
+          .status(200)
+          .json({ message: "Código reenviado para o e-mail." });
+      }
+
+      // Cria novo PendingUser
+      const senhaHash = await bcrypt.hash(senha, 10);
+      const verificationCode = Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
       const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
 
-      await user.update({
+      await PendingUser.create({
+        nome,
+        email,
+        senha: senhaHash,
+        role,
         verificationCode,
         codeExpiration,
+        emailVerified: false,
       });
 
       const emailSent = await sendVerificationEmail(email, verificationCode);
       if (!emailSent) {
-        return res.status(400).json({ error: "Erro ao enviar verificação!" });
+        await PendingUser.destroy({ where: { email } });
+        return res
+          .status(500)
+          .json({ message: "Erro ao enviar o e-mail de verificação." });
       }
 
-      res.json({ message: "Código de verificação enviado!" });
+      return res.status(200).json({ message: "Código enviado para o e-mail." });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      console.error("Erro ao solicitar verificação:", error);
+      return res.status(500).json({ message: "Erro interno do servidor." });
     }
   },
 
   async verifyEmail(req, res) {
     try {
       const { email, verificationCode } = req.body;
-      const user = await User.findOne({ where: { email } });
 
-      if (!user) {
-        return res.status(404).json({ error: "Usuário não encontrado!" });
+      const pending = await PendingUser.findOne({ where: { email } });
+      if (!pending) {
+        return res
+          .status(404)
+          .json({ message: "Pré-cadastro não encontrado." });
       }
 
-      if (user.emailVerified) {
-        return res.status(400).json({ error: "Email já verificado!" });
+      if (
+        pending.verificationCode !== verificationCode ||
+        new Date() > new Date(pending.codeExpiration)
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Código inválido ou expirado." });
       }
 
-      if (user.verificationCode !== verificationCode) {
-        return res.status(401).json({ error: "Código inválido!" });
-      }
-
-      if (new Date() > user.codeExpiration) {
-        return res.status(401).json({ error: "Código expirado!" });
-      }
-
-      await user.update({
+      // Cria usuário definitivo
+      const newUser = await User.create({
+        nome: pending.nome,
+        email: pending.email,
+        senha: pending.senha, // já está hash
+        role: pending.role,
         emailVerified: true,
-        verificationCode: null,
-        codeExpiration: null,
       });
 
-      // Gerar token JWT após verificação
-      const jwt = require('jsonwebtoken');
-      const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.role },
-        process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRATION}
-      );
+      await pending.destroy();
 
-      res.json({ message: "Email verificado com sucesso!", token });
+      return res
+        .status(201)
+        .json({ message: "E-mail verificado com sucesso!", user: newUser });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      console.error("Erro ao verificar e-mail:", error);
+      return res.status(500).json({ message: "Erro interno do servidor." });
+    }
+  },
+
+  async verifyEmail(req, res) {
+    try {
+      const { email, verificationCode } = req.body;
+
+      const pending = await PendingUser.findOne({ where: { email } });
+
+      if (!pending) {
+        return res
+          .status(404)
+          .json({ message: "Pré-cadastro não encontrado." });
+      }
+
+      if (
+        pending.verificationCode !== verificationCode ||
+        new Date() > new Date(pending.codeExpiration)
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Código inválido ou expirado." });
+      }
+
+      const newUser = await User.create({
+        nome: pending.nome,
+        email: pending.email,
+        senha: pending.senha,
+        role: pending.role,
+        emailVerified: true,
+      });
+
+      await pending.destroy();
+
+      return res
+        .status(201)
+        .json({ message: "E-mail verificado com sucesso!", user: newUser });
+    } catch (error) {
+      console.error("Erro ao verificar e-mail:", error);
+      return res.status(500).json({ message: "Erro interno do servidor." });
     }
   },
 
   async update(req, res) {
-    const { error } = userUpdateValidation.validate(req.body)
+    const { error } = userUpdateValidation.validate(req.body);
     if (error) {
-      return res.status(400).json({ error: error.details[0].message })
+      return res.status(400).json({ error: error.details[0].message });
     }
-    
+
     try {
       const updated = await UserService.updateUser(req.params.id, req.body);
       if (updated === null) {
@@ -126,7 +204,12 @@ export const UserController = {
         if (!exists) {
           return res.status(404).json({ error: "Usuário não encontrado!" });
         }
-        return res.status(400).json({ error: "Nenhuma alteração realizada. Envie dados válidos para atualizar." });
+        return res
+          .status(400)
+          .json({
+            error:
+              "Nenhuma alteração realizada. Envie dados válidos para atualizar.",
+          });
       }
       res.json(updated);
     } catch (error) {
@@ -145,4 +228,4 @@ export const UserController = {
       res.status(500).json({ error: error.message });
     }
   },
-}
+};

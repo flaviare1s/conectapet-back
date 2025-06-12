@@ -10,7 +10,7 @@ export async function seedUsers() {
       email: "joao@teste.com",
       senha: senhaHash,
       role: "user",
-      emailVerified: true,  
+      emailVerified: true,
     },
     {
       nome: "APATA",
