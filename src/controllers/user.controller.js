@@ -98,7 +98,16 @@ export const UserController = {
         verificationCode: null,
         codeExpiration: null,
       });
-      res.json({ message: "Email verificado com sucesso!" });
+
+      // Gerar token JWT após verificação
+      const jwt = require('jsonwebtoken');
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRATION}
+      );
+
+      res.json({ message: "Email verificado com sucesso!", token });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
