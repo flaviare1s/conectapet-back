@@ -86,7 +86,7 @@ export const UserController = {
       ).toString();
       const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
 
-      await PendingUser.create({
+      const novoPendingUser = await PendingUser.create({
         nome,
         email,
         senha: senhaHash,
@@ -104,7 +104,12 @@ export const UserController = {
           .json({ message: "Erro ao enviar o e-mail de verificação." });
       }
 
-      return res.status(200).json({ message: "Código enviado para o e-mail." });
+      return res.status(201).json({
+        id: novoPendingUser.id,
+        email: novoPendingUser.email,
+        nome: novoPendingUser.nome,
+        role: novoPendingUser.role,
+      });
     } catch (error) {
       console.error("Erro ao solicitar verificação:", error);
       return res.status(500).json({ message: "Erro interno do servidor." });

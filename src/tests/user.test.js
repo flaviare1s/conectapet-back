@@ -17,11 +17,11 @@ describe("Usuário Controller", () => {
   const senha = "Senha123";
 
   it("Deve criar um usuário", async () => {
-    const res = await request(app).post("/users").send({
+    const res = await request(app).post("/users/request-verification").send({
       nome,
       email,
       senha,
-      role: "user",
+      role: "user" || "guardian"
     });
     expect(res.status).toBe(201);
     expect(res.body.email).toBe(email);
