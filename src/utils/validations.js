@@ -32,7 +32,7 @@ export const petValidation = Joi.object({
   nome: Joi.string().max(50).required(),
   idade: Joi.string().max(20).required(),
   descricao: Joi.string().required(),
-  observacoes: Joi.string().optional(),
+  observacoes: Joi.string().optional().allow(null, ''),
   status: Joi.string()
     .valid("Coração livre!", "Quase lá!", "Final feliz!")
     .required(),
@@ -47,7 +47,7 @@ export const petUpdateValidation = Joi.object({
   nome: Joi.string().max(50),
   idade: Joi.string().max(20),
   descricao: Joi.string(),
-  observacoes: Joi.string().allow("").optional(),
+  observacoes: Joi.string().allow(null, '').optional(),
   status: Joi.string().valid("Coração livre!", "Quase lá!", "Final feliz!"),
   porte: Joi.string().valid("pequeno", "médio", "grande"),
   sexo: Joi.string().valid("macho", "fêmea"),
