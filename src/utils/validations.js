@@ -66,7 +66,7 @@ export const adoptionValidation = Joi.object({
   ec: Joi.string()
     .valid("solteiro", "casado", "divorciado", "viuvo")
     .required(),
-  profissao: Joi.string().optional(),
+  profissao: Joi.string().optional().allow(null, ''),
   cel: Joi.string()
     .pattern(/^\d{10,11}$/)
     .required(),
@@ -92,7 +92,7 @@ export const adoptUpdateValidation = Joi.object({
   dataN: Joi.date().iso().less("now"),
   cpf: Joi.string().pattern(/^\d{11}$/),
   ec: Joi.string().valid("solteiro", "casado", "divorciado", "viuvo"),
-  profissao: Joi.string().optional(),
+  profissao: Joi.string().optional().allow(null, ''),
   cel: Joi.string().pattern(/^\d{10,11}$/),
   cep: Joi.string().pattern(/^\d{8}$/),
   rua: Joi.string().max(200),
