@@ -9,7 +9,7 @@ import { errorHandler } from "./middlewares/errorHandler.js"
 
 export const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://conectapet-front.vercel.app" }));
 
 app.use(express.json());
 
