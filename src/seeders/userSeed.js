@@ -10,35 +10,42 @@ export async function seedUsers() {
       email: "joao@teste.com",
       senha: senhaHash,
       role: "user",
-      emailVerificado: true,  
+      emailVerified: true,
     },
     {
       nome: "APATA",
       email: "apata@teste.com",
       senha: senhaHash,
       role: "guardian",
-      emailVerificado: true,  
+      emailVerified: true,
     },
     {
       nome: "Maria de Sousa",
       email: "maria@teste.com",
       senha: senhaHash,
       role: "user",
-      emailVerificado: true,  
+      emailVerified: true,
     },
     {
       nome: "UPAC",
       email: "upac@teste.com",
       senha: senhaHash,
       role: "guardian",
-      emailVerificado: true,  
+      emailVerified: true,
     },
     {
       nome: "Abrigo São Lázaro",
       email: "asl@teste.com",
       senha: senhaHash,
       role: "guardian",
-      emailVerificado: true,  
+      emailVerified: true,
+    },
+    {
+      nome: "GPA",
+      email: "gpa@teste.com",
+      senha: senhaHash,
+      role: "guardian",
+      emailVerificado: true,
     },
   ];
 
@@ -49,8 +56,11 @@ export async function seedUsers() {
     });
     if (created) {
       console.log(`Usuário ${user.email} criado`);
+    } else if (obj.emailVerified !== true) {
+      await obj.update({ emailVerified: true });
+      console.log(`Usuário ${user.email} já existe, emailVerified atualizado para true`);
     } else {
-      console.log(`Usuário ${user.email} já existe`);
+      console.log(`Usuário ${user.email} já existe e já está verificado`);
     }
   }
 }
