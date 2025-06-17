@@ -29,10 +29,10 @@ describe("Usuário Controller", () => {
   });
 
   it("Deve lançar exceção para cadastro sem senha", async () => {
-    const res = await request(app).post("/users").send({
+    const res = await request(app).post("/users/request-verification").send({
       nome,
       email,
-      role: "user",
+      role: "user" || "guardian"
     });
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('"senha" is required');
