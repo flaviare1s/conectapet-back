@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../app.js";
 import { connection as sequelize } from "../config/database.js";
+import { PendingUser } from "../models/pendingUser.model.js";
 
 beforeAll(async () => {
   await sequelize.sync({ force: true });
@@ -12,6 +13,7 @@ afterAll(async () => {
 
 describe("Usuário Controller", () => {
   let usuarioId;
+  let verificationCode;
   const nome = "Teste";
   const email = "teste@email.com";
   const senha = "Senha123";
@@ -38,11 +40,49 @@ describe("Usuário Controller", () => {
     expect(res.body.error).toBe('"senha" is required');
   });
 
+  it("Deve retornar erro 400 se o e-mail já estiver cadastrado e verificado (PendingUser)", async () => {
+    await PendingUser.destroy({ where: { email: "pendingverificado@email.com" } }); // Limpa antes
+    // Cria um PendingUser já verificado
+  await PendingUser.create({
+    nome: "Usuário Verificado",
+    email: "pendingverificado@email.com",
+    senha: "Senha123",
+    role: "user",
+    verificationCode: "123456",
+    codeExpiration: new Date(Date.now() + 20 * 60 * 1000),
+    emailVerified: true
+  });
+
+  // Agora simule a requisição para a rota
+  const res = await request(app).post("/users/request-verification").send({
+    nome: "Usuário Verificado",
+    email: "pendingverificado@email.com",
+    senha: "Senha123",
+    role: "user"
+  });
+
+  expect(res.status).toBe(400);
+  // Veja se a resposta retorna .message ou .error conforme seu controller
+  expect(res.body.message).toBe("Email já está cadastrado e verificado.");
+});
+  
   it("Deve listar os usuários", async () => {
-    const res = await request(app).get("/users");
-    expect(res.status).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBeGreaterThan(0);
+    // Busque o código de verificação no banco
+  const pendingUser = await PendingUser.findOne({ where: { email } });
+  verificationCode = pendingUser.verificationCode;
+
+  // Simule a verificação do e-mail
+  const verifyRes = await request(app).post("/users/verify-email").send({
+    email,
+    verificationCode
+  });
+  expect(verifyRes.status).toBe(201);
+  
+ const res = await request(app).get("/users");
+  expect(res.status).toBe(200);
+  expect(Array.isArray(res.body)).toBe(true);
+  expect(res.body.length).toBeGreaterThan(0);
+
   });
 
   it("Deve buscar usuário por ID", async () => {
@@ -93,4 +133,6 @@ describe("Usuário Controller", () => {
     expect(res.status).toBe(404);
     expect(res.body.error).toBe("Usuário não encontrado!");
   });
+
+  
 });

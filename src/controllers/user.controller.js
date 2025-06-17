@@ -58,6 +58,14 @@ export const UserController = {
 
       const { nome, email, senha, role } = req.body;
 
+      // Verifica se já existe PendingUser verificado
+      const existingPending = await PendingUser.findOne({ where: { email } });
+      if (existingPending && existingPending.emailVerified) {
+        return res
+          .status(400)
+          .json({ message: "Email já está cadastrado e verificado." });
+      }
+
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser && existingUser.emailVerified) {
         return res

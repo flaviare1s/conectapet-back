@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/services/pet.service.js</title>
+    <title>Code coverage report for src/models/pendingUser.model.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/services</a> pet.service.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> pendingUser.model.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/7</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/7</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -90,60 +90,69 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PetRepository } from "../repositories/pet.repository.js";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DataTypes } from "sequelize";
+import { connection } from "../config/database.js";
 &nbsp;
-export const PetService = {
-  createPet: <span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.create(data);</span>
+export const PendingUser = connection.define("PendingUser", {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-&nbsp;
-  getAllPets: <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.findAll();</span>
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
-&nbsp;
-  getPetById: <span class="fstat-no" title="function not covered" >as</span>ync (id) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.findById(id);</span>
+  senha: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-&nbsp;
-  updatePet: <span class="fstat-no" title="function not covered" >as</span>ync (id, data) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.update(id, data);</span>
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-&nbsp;
-  updatePetStatus: <span class="fstat-no" title="function not covered" >as</span>ync (id, status) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.updateStatus(id, status);</span>
+  verificationCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-&nbsp;
-  deletePet: <span class="fstat-no" title="function not covered" >as</span>ync (id) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return await PetRepository.delete(id);</span>
+  codeExpiration: {
+    type: DataTypes.DATE,
+    allowNull: false,
   },
-};
+});
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
