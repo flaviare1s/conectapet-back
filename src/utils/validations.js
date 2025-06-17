@@ -32,7 +32,7 @@ export const petValidation = Joi.object({
   nome: Joi.string().max(50).required(),
   idade: Joi.string().max(20).required(),
   descricao: Joi.string().required(),
-  observacoes: Joi.string().optional(),
+  observacoes: Joi.string().optional().allow(null, ''),
   status: Joi.string()
     .valid("Coração livre!", "Quase lá!", "Final feliz!")
     .required(),
@@ -47,7 +47,7 @@ export const petUpdateValidation = Joi.object({
   nome: Joi.string().max(50),
   idade: Joi.string().max(20),
   descricao: Joi.string(),
-  observacoes: Joi.string().allow("").optional(),
+  observacoes: Joi.string().allow(null, '').optional(),
   status: Joi.string().valid("Coração livre!", "Quase lá!", "Final feliz!"),
   porte: Joi.string().valid("pequeno", "médio", "grande"),
   sexo: Joi.string().valid("macho", "fêmea"),
@@ -66,7 +66,7 @@ export const adoptionValidation = Joi.object({
   ec: Joi.string()
     .valid("solteiro", "casado", "divorciado", "viuvo")
     .required(),
-  profissao: Joi.string().optional(),
+  profissao: Joi.string().optional().allow(null, ''),
   cel: Joi.string()
     .pattern(/^\d{10,11}$/)
     .required(),
@@ -92,7 +92,7 @@ export const adoptUpdateValidation = Joi.object({
   dataN: Joi.date().iso().less("now"),
   cpf: Joi.string().pattern(/^\d{11}$/),
   ec: Joi.string().valid("solteiro", "casado", "divorciado", "viuvo"),
-  profissao: Joi.string().optional(),
+  profissao: Joi.string().optional().allow(null, ''),
   cel: Joi.string().pattern(/^\d{10,11}$/),
   cep: Joi.string().pattern(/^\d{8}$/),
   rua: Joi.string().max(200),
