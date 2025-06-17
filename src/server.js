@@ -4,7 +4,7 @@ import './models/index.js';
 import fs from "fs";
 import path from "path";
 
-const PORT = 3000;
+const PORT = 4000;
 
 const uploadDir = path.resolve("./uploads");
 
