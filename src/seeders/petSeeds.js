@@ -166,7 +166,7 @@ export async function petSeeds() {
       guardianId: 2,
     },
     {
-      tipo: "gato",
+      tipo: "cachorro",
       nome: "Felix",
       idade: "6 meses",
       imagem: "../pet-seeds-img/felix-cachorro.jpg",
