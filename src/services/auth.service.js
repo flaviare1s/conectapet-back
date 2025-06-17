@@ -3,7 +3,24 @@ import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/user.repository.js";
 
 const jwtSecret = process.env.JWT_SECRET;
-const tokenExpiration = process.env.JWT_EXPIRATION;
+const accessTokenExpiration = process.env.ACCESS_TOKEN_EXPIRATION || "1h";
+const refreshTokenExpiration = process.env.REFRESH_TOKEN_EXPIRATION || "1d";
+
+function generateTokens(user) {
+  const accessToken = jwt.sign(
+    { id: user.id, email: user.email, role: user.role },
+    jwtSecret,
+    { expiresIn: accessTokenExpiration }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user.id, email: user.email, role: user.role },
+    jwtSecret,
+    { expiresIn: refreshTokenExpiration }
+  );
+
+  return { accessToken, refreshToken };
+}
 
 async function login(email, senha) {
   const user = await UserRepository.findByEmail(email);
@@ -22,19 +39,12 @@ async function login(email, senha) {
     throw error;
   }
 
-  const token = jwt.sign(
-    { id: user.id, email: user.email, role: user.role },
-    jwtSecret,
-    { expiresIn: tokenExpiration }
-  );
-
-  return { token };
+  return generateTokens(user);
 }
 
 function verifyToken(token) {
   try {
-    const decoded = jwt.verify(token, jwtSecret);
-    return decoded;
+    return jwt.verify(token, jwtSecret);
   } catch (err) {
     const authError = new Error(
       err.name === "TokenExpiredError" ? "Token expirado!" : "Token inválido!"
@@ -44,7 +54,19 @@ function verifyToken(token) {
   }
 }
 
+function refreshToken(oldToken) {
+  try {
+    const decoded = jwt.verify(oldToken, jwtSecret);
+    return generateTokens(decoded);
+  } catch (err) {
+    const error = new Error("Refresh token inválido ou expirado");
+    error.statusCode = 401;
+    throw error;
+  }
+}
+
 export default {
   login,
   verifyToken,
+  refreshToken,
 };
