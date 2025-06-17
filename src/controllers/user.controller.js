@@ -6,19 +6,26 @@ import { userUpdateValidation } from "../utils/validations.js";
 import bcrypt from "bcrypt";
 import { pendingUserValidation } from "../utils/validations.js";
 
-export const UserController = {
-  // async create(req, res) {
-  //   const { error } = userValidation.validate(req.body);
-  //   if (error) {
-  //     return res.status(400).json({ error: error.details[0].message });
-  //   }
+function generateVerificationData() {
+  return {
+    verificationCode: Math.floor(100000 + Math.random() * 900000).toString(),
+    codeExpiration: new Date(Date.now() + 20 * 60 * 1000),
+  };
+};
 
-  //   try {
-  //     const user = await UserService.createUser(req.body);
-  //     res.status(201).json(user);
-  //   } catch (err) {
-  //     res.status(400).json({ error: err.message });
-  //   }
+export const UserController = {
+//   async create(req, res) {
+//     const { error } = userValidation.validate(req.body);
+//     if (error) {
+//       return res.status(400).json({ error: error.details[0].message });
+//     }
+
+//     try {
+//       const user = await UserService.createUser(req.body);
+//       res.status(201).json(user);
+//     } catch (err) {
+//       res.status(400).json({ error: err.message });
+//     }
   // },
 
   async getAll(_req, res) {
@@ -59,12 +66,9 @@ export const UserController = {
       }
 
       const pendingUser = await PendingUser.findOne({ where: { email } });
+      const { verificationCode, codeExpiration } = generateVerificationData();
       if (pendingUser) {
         // Reenvia código
-        const verificationCode = Math.floor(
-          100000 + Math.random() * 900000
-        ).toString();
-        const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
         await pendingUser.update({ verificationCode, codeExpiration });
 
         const emailSent = await sendVerificationEmail(email, verificationCode);
@@ -79,13 +83,8 @@ export const UserController = {
           .json({ message: "Código reenviado para o e-mail." });
       }
 
-      // Cria novo PendingUser
+      // Cria novo PendingUser (rota de criação de usuário)
       const senhaHash = await bcrypt.hash(senha, 10);
-      const verificationCode = Math.floor(
-        100000 + Math.random() * 900000
-      ).toString();
-      const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
-
       const novoPendingUser = await PendingUser.create({
         nome,
         email,
