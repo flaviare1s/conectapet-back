@@ -58,14 +58,11 @@ export const UserController = {
 
       const { nome, email, senha, role } = req.body;
 
-      // Verifica se já existe PendingUser verificado
-      const existingPending = await PendingUser.findOne({ where: { email } });
-      if (existingPending && existingPending.emailVerified) {
-        return res
-          .status(400)
-          .json({ message: "Email já está cadastrado e verificado." });
-      }
+      // Busca PendingUser uma única vez
+      const pendingUser = await PendingUser.findOne({ where: { email } });
+      // Não verifica emailVerified em PendingUser, pois não existe esse campo
 
+      // Verifica User já verificado
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser && existingUser.emailVerified) {
         return res
@@ -73,10 +70,8 @@ export const UserController = {
           .json({ message: "Email já está cadastrado e verificado." });
       }
 
-      const pendingUser = await PendingUser.findOne({ where: { email } });
       const { verificationCode, codeExpiration } = generateVerificationData();
       if (pendingUser) {
-        // Reenvia código
         await pendingUser.update({ verificationCode, codeExpiration });
 
         const emailSent = await sendVerificationEmail(email, verificationCode);

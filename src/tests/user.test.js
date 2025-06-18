@@ -40,31 +40,29 @@ describe("Usuário Controller", () => {
     expect(res.body.error).toBe('"senha" is required');
   });
 
-  it("Deve retornar erro 400 se o e-mail já estiver cadastrado e verificado (PendingUser)", async () => {
-    await PendingUser.destroy({ where: { email: "pendingverificado@email.com" } }); // Limpa antes
-    // Cria um PendingUser já verificado
-  await PendingUser.create({
-    nome: "Usuário Verificado",
-    email: "pendingverificado@email.com",
-    senha: "Senha123",
-    role: "user",
-    verificationCode: "123456",
-    codeExpiration: new Date(Date.now() + 20 * 60 * 1000),
-    emailVerified: true
-  });
+  it("deve reenviar código se PendingUser já existir", async () => {
+    const email = "teste@reenviar.com";
+    await PendingUser.create({
+      nome: "Usuário",
+      email,
+      senha: "Senha123",
+      role: "user",
+      verificationCode: "123456",
+      codeExpiration: new Date(Date.now() + 20 * 60 * 1000)
+    });
 
-  // Agora simule a requisição para a rota
-  const res = await request(app).post("/users/request-verification").send({
-    nome: "Usuário Verificado",
-    email: "pendingverificado@email.com",
-    senha: "Senha123",
-    role: "user"
-  });
+    const res = await request(app)
+      .post("/users/request-verification")
+      .send({
+        nome: "Usuário",
+        email,
+        senha: "Senha123",
+        role: "user"
+      });
 
-  expect(res.status).toBe(400);
-  // Veja se a resposta retorna .message ou .error conforme seu controller
-  expect(res.body.message).toBe("Email já está cadastrado e verificado.");
-});
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("Código reenviado para o e-mail.");
+  });
   
   it("Deve listar os usuários", async () => {
     // Busque o código de verificação no banco
