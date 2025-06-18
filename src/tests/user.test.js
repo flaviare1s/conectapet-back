@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "../app.js";
 import { connection as sequelize } from "../config/database.js";
 import { PendingUser } from "../models/pendingUser.model.js";
+import { User } from "../models/user.model.js";
 
 beforeAll(async () => {
   await sequelize.sync({ force: true });
@@ -40,7 +41,7 @@ describe("Usuário Controller", () => {
     expect(res.body.error).toBe('"senha" is required');
   });
 
-  it("deve reenviar código se PendingUser já existir", async () => {
+  it("Deve reenviar código se PendingUser já existir", async () => {
     const email = "teste@reenviar.com";
     await PendingUser.create({
       nome: "Usuário",
@@ -63,24 +64,57 @@ describe("Usuário Controller", () => {
     expect(res.status).toBe(200);
     expect(res.body.message).toBe("Código reenviado para o e-mail.");
   });
+
+
+  it("Deve retornar 400 se User já estiver cadastrado e verificado", async () => {
+  const email = "teste@email.com";
+  // Cria um usuário já verificado
+  await User.create({
+    nome: "Usuário Verificado",
+    email,
+    senha: "Senha123",
+    role: "user",
+    emailVerified: true
+  });
+
+  const res = await request(app)
+    .post("/users/request-verification")
+    .send({
+      nome: "Usuário Verificado",
+      email,
+      senha: "Senha123",
+      role: "user"
+    });
+
+  expect(res.status).toBe(400);
+  expect(res.body.message).toBe("Email já está cadastrado e verificado.");
+});
   
   it("Deve listar os usuários", async () => {
-    // Busque o código de verificação no banco
-  const pendingUser = await PendingUser.findOne({ where: { email } });
-  verificationCode = pendingUser.verificationCode;
+    // Usa e-mail único para evitar conflito com outros testes
+    const emailList = "listar@email.com";
+    await request(app).post("/users/request-verification").send({
+      nome: "Listar Usuário",
+      email: emailList,
+      senha: "Senha123",
+      role: "user"
+    });
+    const pendingUser = await PendingUser.findOne({ where: { email: emailList } });
+    const verificationCode = pendingUser.verificationCode;
 
-  // Simule a verificação do e-mail
-  const verifyRes = await request(app).post("/users/verify-email").send({
-    email,
-    verificationCode
-  });
-  expect(verifyRes.status).toBe(201);
-  
- const res = await request(app).get("/users");
-  expect(res.status).toBe(200);
-  expect(Array.isArray(res.body)).toBe(true);
-  expect(res.body.length).toBeGreaterThan(0);
+    // Simula a verificação do e-mail
+    const verifyRes = await request(app).post("/users/verify-email").send({
+      email: emailList,
+      verificationCode
+    });
+    expect(verifyRes.status).toBe(201);
 
+    const res = await request(app).get("/users");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    // Garante que o usuário verificado está na lista
+    expect(res.body.some(u => u.email === emailList)).toBe(true);
   });
 
   it("Deve buscar usuário por ID", async () => {
