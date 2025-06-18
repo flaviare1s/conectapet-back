@@ -127,7 +127,7 @@ export async function petSeeds() {
       tipo: "cachorro",
       nome: "Meg",
       idade: "6 anos",
-      imagem: "../pet-seeds-img/meg-cachorra.jpg",
+      imagem: "../pet-seeds-img/meggie-cachorra.jpg",
       descricao: "Cachorra calma e obediente.",
       observacoes: null,
       status: "Coração livre!",
