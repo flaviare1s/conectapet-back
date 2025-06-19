@@ -6,21 +6,29 @@ import { userUpdateValidation } from "../utils/validations.js";
 import bcrypt from "bcrypt";
 import { pendingUserValidation } from "../utils/validations.js";
 
-export const UserController = {
-  // async create(req, res) {
-  //   const { error } = userValidation.validate(req.body);
-  //   if (error) {
-  //     return res.status(400).json({ error: error.details[0].message });
-  //   }
+function generateVerificationData() {
+  return {
+    verificationCode: Math.floor(100000 + Math.random() * 900000).toString(),
+    codeExpiration: new Date(Date.now() + 20 * 60 * 1000),
+  };
+};
 
-  //   try {
-  //     const user = await UserService.createUser(req.body);
-  //     res.status(201).json(user);
-  //   } catch (err) {
-  //     res.status(400).json({ error: err.message });
-  //   }
+export const UserController = {
+//   async create(req, res) {
+//     const { error } = userValidation.validate(req.body);
+//     if (error) {
+//       return res.status(400).json({ error: error.details[0].message });
+//     }
+
+//     try {
+//       const user = await UserService.createUser(req.body);
+//       res.status(201).json(user);
+//     } catch (err) {
+//       res.status(400).json({ error: err.message });
+//     }
   // },
 
+export const UserController = {
   async getAll(_req, res) {
     try {
       const users = await UserService.getAllUsers();
@@ -51,6 +59,8 @@ export const UserController = {
 
       const { nome, email, senha, role } = req.body;
 
+      // Busca PendingUser uma única vez
+      const pendingUser = await PendingUser.findOne({ where: { email } });
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser && existingUser.emailVerified) {
         return res
@@ -58,34 +68,23 @@ export const UserController = {
           .json({ message: "Email já está cadastrado e verificado." });
       }
 
-      const pendingUser = await PendingUser.findOne({ where: { email } });
+      const { verificationCode, codeExpiration } = generateVerificationData();
       if (pendingUser) {
-        // Reenvia código
-        const verificationCode = Math.floor(
-          100000 + Math.random() * 900000
-        ).toString();
-        const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
-        await pendingUser.update({ verificationCode, codeExpiration });
 
+        await pendingUser.update({ verificationCode, codeExpiration });
         const emailSent = await sendVerificationEmail(email, verificationCode);
         if (!emailSent) {
           return res
             .status(500)
             .json({ message: "Erro ao enviar o e-mail de verificação." });
         }
-
         return res
           .status(200)
           .json({ message: "Código reenviado para o e-mail." });
       }
 
-      // Cria novo PendingUser
+      // Cria novo PendingUser (rota de criação de usuário)
       const senhaHash = await bcrypt.hash(senha, 10);
-      const verificationCode = Math.floor(
-        100000 + Math.random() * 900000
-      ).toString();
-      const codeExpiration = new Date(Date.now() + 20 * 60 * 1000);
-
       const novoPendingUser = await PendingUser.create({
         nome,
         email,
@@ -95,7 +94,6 @@ export const UserController = {
         codeExpiration,
         emailVerified: false,
       });
-
       const emailSent = await sendVerificationEmail(email, verificationCode);
       if (!emailSent) {
         await PendingUser.destroy({ where: { email } });
@@ -103,7 +101,6 @@ export const UserController = {
           .status(500)
           .json({ message: "Erro ao enviar o e-mail de verificação." });
       }
-
       return res.status(201).json({
         id: novoPendingUser.id,
         email: novoPendingUser.email,
@@ -111,7 +108,6 @@ export const UserController = {
         role: novoPendingUser.role,
       });
     } catch (error) {
-      console.error("Erro ao solicitar verificação:", error);
       return res.status(500).json({ message: "Erro interno do servidor." });
     }
   },
@@ -119,15 +115,12 @@ export const UserController = {
   async verifyEmail(req, res) {
     try {
       const { email, verificationCode } = req.body;
-
       const pending = await PendingUser.findOne({ where: { email } });
-
       if (!pending) {
         return res
           .status(404)
           .json({ message: "Pré-cadastro não encontrado." });
       }
-
       if (
         pending.verificationCode !== verificationCode ||
         new Date() > new Date(pending.codeExpiration)
@@ -137,6 +130,11 @@ export const UserController = {
           .json({ message: "Código inválido ou expirado." });
       }
 
+      // Antes de criar o usuário, verifica se já existe
+      const existingUser = await User.findOne({ where: { email: pending.email } });
+      if (existingUser) {
+        return res.status(400).json({ message: "Email já está cadastrado e verificado." });
+      }
       const newUser = await User.create({
         nome: pending.nome,
         email: pending.email,
@@ -144,14 +142,11 @@ export const UserController = {
         role: pending.role,
         emailVerified: true,
       });
-
       await pending.destroy();
-
       return res
         .status(201)
         .json({ message: "E-mail verificado com sucesso!", user: newUser });
     } catch (error) {
-      console.error("Erro ao verificar e-mail:", error);
       return res.status(500).json({ message: "Erro interno do servidor." });
     }
   },

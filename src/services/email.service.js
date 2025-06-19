@@ -17,7 +17,7 @@ export const sendVerificationEmail = async (email, verificationCode) => {
   const mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: email,
-    subject: "Verificação do Email - GT SUL",
+    subject: "Verificação de Email - ConectaPet 🐾",
     html: `
             <h1>Verificação de e-mail</h1>
             <p>Seu código de verificação é: <strong>${verificationCode}</strong></p>
