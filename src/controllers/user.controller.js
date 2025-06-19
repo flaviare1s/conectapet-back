@@ -13,7 +13,6 @@ function generateVerificationData() {
   };
 };
 
-export const UserController = {
 //   async create(req, res) {
 //     const { error } = userValidation.validate(req.body);
 //     if (error) {
@@ -26,7 +25,7 @@ export const UserController = {
 //     } catch (err) {
 //       res.status(400).json({ error: err.message });
 //     }
-  // },
+//   },
 
 export const UserController = {
   async getAll(_req, res) {
