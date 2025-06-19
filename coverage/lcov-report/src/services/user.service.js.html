@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.27% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/22</span>
+                <span class='fraction'>8/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.19% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/21</span>
+                <span class='fraction'>7/21</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,27 +114,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,28 +159,28 @@
 import { UserRepository } from "../repositories/user.repository.js";
 &nbsp;
 export const UserService = {
-  createUser: async (data) =&gt; {
-    const existingUser = await UserRepository.findByEmail(data.email);
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (existingUser) {
+  createUser: <span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {
+    const existingUser = <span class="cstat-no" title="statement not covered" >await UserRepository.findByEmail(data.email);</span>
+<span class="cstat-no" title="statement not covered" >    if (existingUser) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("E-mail já cadastrado.");</span>
     }
 &nbsp;
-    const allowedRoles = ["user", "guardian"];
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!allowedRoles.includes(data.role)) {
+    const allowedRoles = <span class="cstat-no" title="statement not covered" >["user", "guardian"];</span>
+<span class="cstat-no" title="statement not covered" >    if (!allowedRoles.includes(data.role)) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("Perfil inválido.");</span>
     }
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (data.senha.length &lt; 6) {
+<span class="cstat-no" title="statement not covered" >    if (data.senha.length &lt; 6) {</span>
       const error = <span class="cstat-no" title="statement not covered" >new Error("A senha deve conter no mínimo 6 caracteres!");</span>
 <span class="cstat-no" title="statement not covered" >      error.statusCode = 400;</span>
 <span class="cstat-no" title="statement not covered" >      throw error;</span>
     }
 &nbsp;
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(data.senha, saltRounds);
-    data.senha = hashedPassword;
+    const saltRounds = <span class="cstat-no" title="statement not covered" >10;</span>
+    const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(data.senha, saltRounds);</span>
+<span class="cstat-no" title="statement not covered" >    data.senha = hashedPassword;</span>
 &nbsp;
-    return await UserRepository.create(data);
+<span class="cstat-no" title="statement not covered" >    return await UserRepository.create(data);</span>
   },
 &nbsp;
   getAllUsers: async () =&gt; {
@@ -208,7 +208,7 @@ export const UserService = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-11T16:33:09.610Z
+                at 2025-06-18T14:57:06.218Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
