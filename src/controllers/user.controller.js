@@ -14,6 +14,21 @@ function generateVerificationData() {
 };
 
 export const UserController = {
+//   async create(req, res) {
+//     const { error } = userValidation.validate(req.body);
+//     if (error) {
+//       return res.status(400).json({ error: error.details[0].message });
+//     }
+
+//     try {
+//       const user = await UserService.createUser(req.body);
+//       res.status(201).json(user);
+//     } catch (err) {
+//       res.status(400).json({ error: err.message });
+//     }
+  // },
+
+export const UserController = {
   async getAll(_req, res) {
     try {
       const users = await UserService.getAllUsers();
@@ -55,6 +70,7 @@ export const UserController = {
 
       const { verificationCode, codeExpiration } = generateVerificationData();
       if (pendingUser) {
+
         await pendingUser.update({ verificationCode, codeExpiration });
         const emailSent = await sendVerificationEmail(email, verificationCode);
         if (!emailSent) {
