@@ -4,7 +4,7 @@
 
 Esta aplicação representa a API do projeto ConectaPet, desenvolvida como parte da conclusão do curso **Geração Tech 2.0**. 
 O backend tem como objetivo fornecer todos os recursos necessários para o funcionamento do sistema de adoção de pets, como autenticação, cadastro de usuários e gerenciamento de animais. 
-O projeto foi construído com foco na organização de código, segurança básica e integração com o frontend desenvolvido pela equipe.
+O projeto foi construído com foco na organização e documentação de código, adicionando segurança básica e integração com o frontend desenvolvido pela equipe.
 
 ---
 
@@ -23,6 +23,7 @@ O projeto foi construído com foco na organização de código, segurança bási
 - **CORS** – Controle de acesso entre diferentes origens.
 - **Nodemailer** – Envio de e-mails via SMTP.
 - **Multer** – Manipulação de uploads de arquivos.
+- **Swagger JS Docs e UI Express** – Documentação da API.
 
 ---
 
@@ -30,43 +31,44 @@ O projeto foi construído com foco na organização de código, segurança bási
 
 1. Abra o Git Bash ou terminal e vá até a pasta desejada:
   ```
-    cd Documents/
+ cd Documents/
   ```
 2.  Clone o repositório:
-   ```bash
-   git clone https://github.com/flaviare1s/conectapet-back.git
-   ```
+  ```bash
+  git clone https://github.com/flaviare1s/conectapet-back.git
+  ```
 3. Acesse o diretório do projeto:
   ```bash
   cd conectapet-back
   ```
 4. Abra o Visual Studio Code:
-   ```
-   code .
-   ```
+  ```
+  code .
+  ```
 5. Instale as dependências:
-   ```bash
-   npm install
-   ```
-6. Copie o arquivo `.env.example` e cole na raiz do projeto e renomeie para `.env`:
+  ```bash
+  npm install
+  ```
+6. Copie o arquivo `.env.example`, cole na raiz do projeto e renomeie-o para `.env`.
 
-7. Configure o `.env` com as variáveis adequadas (como as credenciais do banco de dados e JWT).
+7. Configure o  arquivo `.env` com as variáveis adequadas (credenciais do banco de dados, JWT e Nodemailer).
 
 8. Crie o banco de dados no prompt do MySQL:
   ```
-    create database conectapet_db;
+ create database conectapet_db;
   ```
+
 9. Inicie o servidor:
-   ```bash
-   npm start
-   ```  
+ ```bash
+  npm start
+  ```  
 10. Crie os dados falsos:
   ```
-    npm run seed
+ npm run seed
   ```
 ---
 
-### O banco foi hospedado no TiDB e o deploy foi feito usando Render
+### O banco foi hospedado no TiDB e o deploy foi feito usando Render.
 
 ## Link do Deploy
 🔗 https://conectapet-front.vercel.app/
@@ -74,15 +76,21 @@ O projeto foi construído com foco na organização de código, segurança bási
 ## Rotas Principais
 
 ```
+POST   /request-verification   - Criação de novo usuário
 POST   /verify-email           - Autenticação de usuários
 GET    /users                  - Listagem de usuários
-POST   /request-verification   - Criação de novo usuário
-GET    /pets                   - Listagem de pets cadastrados
-POST   /pets                   - Cadastro de novo pet
 PUT    /users/:id              - Atualização de usuário
-PUT    /pets/:id               - Atualização de pet
+POST /auth                     - Login do usuário 
+POST /auth/refresh-token       - Refresh do token JWT
 DELETE /users/:id              - Remoção de usuário
+POST   /pets                   - Cadastro de novo pet
+GET    /pets                   - Listagem de pets cadastrados
+PUT    /pets/:id               - Atualização de pet
 DELETE /pets/:id               - Remoção de pet
+POST /adoptions                - Solicitar adoção de pet 
+GET /adoptions                 - Listar solicitações de adoção (guardian) 
+PUT /adoptions/:id             - Atualizar solicitação de adoção (guardian) 
+DELETE /adoptions/:id          - Deletar solicitação de adoção (guardian)
 ```
 
 ---
@@ -97,18 +105,19 @@ npm run test
 
 ---
 
-## Branchs de test:
-Backend: ```tests``` e ```test/users```
+## Branch de teste:
+Backend: ```tests```
 
 ---
 
 ## Conecte com o Frontend
 
 > Para funcionamento completo da aplicação, é necessário rodar também o frontend:
-
 🔗 Repositório do frontend: [https://github.com/flaviare1s/conectapet-front](https://github.com/flaviare1s/conectapet-front)
 
 ---
+
+⚠️ A porta padrão esperada é a 3000.
 
 ## Equipe de Desenvolvimento
 
