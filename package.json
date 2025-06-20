@@ -24,7 +24,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "swagger": "start http://localhost:3000/api-docs"
   },
   "repository": {
     "type": "git",
