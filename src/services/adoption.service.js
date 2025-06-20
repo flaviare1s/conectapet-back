@@ -1,6 +1,4 @@
 import { AdoptionRepository } from "../repositories/adoption.repository.js";
-import bcrypt from "bcrypt"
-
 
 export const AdoptionService = {
   createAdoption: async (data) => {
