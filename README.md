@@ -23,9 +23,9 @@ O projeto foi construído com foco na organização e documentação de código,
 - **CORS** – Controle de acesso entre diferentes origens.
 - **Nodemailer** – Envio de e-mails via SMTP.
 - **Multer** – Manipulação de uploads de arquivos.
-- **Swagger JS Docs e UI Express** – Documentação da API.
+- **Swagger JS Docs e UI Express** – Documentação interativa da API gerada automaticamente.
 
----
+
 
 ## Como Executar Localmente
 
@@ -62,11 +62,20 @@ O projeto foi construído com foco na organização e documentação de código,
  ```bash
   npm start
   ```  
+
 10. Crie os dados falsos:
   ```
  npm run seed
   ```
+
+11. Acesse a documentação interativa e teste os endpoints:  
+
+ ```bash
+  npm run swagger
+  ```  
+  
 ---
+
 
 ### O banco foi hospedado no TiDB e o deploy foi feito usando Render.
 
