@@ -131,8 +131,7 @@ Backend: ```tests```
 ## Equipe de Desenvolvimento
 
 - [André](https://github.com/AndreFMoura11)  
-- [Caio](https://github.com/Caiovictor14)  
 - [Flávia](https://github.com/flaviare1s)  
-- [Lucas](https://github.com/1uc-dev)  
+- [Lucas](https://github.com/1uc-dev) 
 - [Olavo](https://github.com/olavoVieira)  
 - [Palloma](https://github.com/pallomadvm)
